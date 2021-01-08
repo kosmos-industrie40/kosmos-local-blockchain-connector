@@ -1,0 +1,17 @@
+FROM nodered/node-red:1.2.7
+RUN npm install node-red-dashboard
+
+COPY ./blockchain-connector/flows.json /app/flows.json
+COPY ./common /app/common
+COPY ./blockchain-connector/entrypoint.sh /usr/src/node-red/entrypoint.sh
+
+USER root
+
+RUN apk add jq curl &&\
+    chmod +x /usr/src/node-red/entrypoint.sh &&\
+    chown -R node-red:node-red /app
+
+USER node-red
+
+HEALTHCHECK CMD curl -f -s http://127.0.0.1:1880/health || exit 1
+ENTRYPOINT [ "/usr/src/node-red/entrypoint.sh" ]

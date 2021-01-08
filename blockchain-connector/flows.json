@@ -1,0 +1,1882 @@
+[
+    {
+        "id": "f7247905.828f38",
+        "type": "tab",
+        "label": "Konfiguration (Dashboard)",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "70de23d1.e038a4",
+        "type": "tab",
+        "label": "MQTT / Log",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "d9594b8f.641b7",
+        "type": "tab",
+        "label": "Statistik",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "c70ed392.30d548",
+        "type": "tab",
+        "label": "BC UI",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "cd25a1d0.3ef9c8",
+        "type": "tab",
+        "label": "Test TX",
+        "disabled": true,
+        "info": ""
+    },
+    {
+        "id": "da53b866.818b4",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-dark",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#097479",
+                    "value": "#097479",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#097479",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#0eb8c0",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#555555",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#eeeeee",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#097479",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey"
+            }
+        },
+        "site": {
+            "name": "KOSMoS Blockchain Connector Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "true",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "5e822ce4.c7fbdc",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "${MQTT_BROKER_FQDN}",
+        "port": "8883",
+        "tls": "270c576d.d3692",
+        "clientid": "",
+        "usetls": true,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "3ca18455.f0647c",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Konfiguration",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "e5f204d6.08dcf8",
+        "type": "ui_group",
+        "z": "",
+        "name": "BCC_CONFIG",
+        "tab": "3ca18455.f0647c",
+        "order": 1,
+        "disp": true,
+        "width": 30,
+        "collapse": false
+    },
+    {
+        "id": "b1ab5c9a.eff0b8",
+        "type": "ui_tab",
+        "z": "",
+        "name": "LOG",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "5e46a468.baa314",
+        "type": "ui_group",
+        "z": "",
+        "name": "Blockchain Connector Statistik",
+        "tab": "4769e867.58654",
+        "order": 1,
+        "disp": true,
+        "width": 30,
+        "collapse": false
+    },
+    {
+        "id": "20dcd6f2.879e02",
+        "type": "ui_group",
+        "z": "",
+        "name": "Blockchain Response",
+        "tab": "b1ab5c9a.eff0b8",
+        "order": 2,
+        "disp": false,
+        "width": 30,
+        "collapse": false
+    },
+    {
+        "id": "270c576d.d3692",
+        "type": "tls-config",
+        "z": "",
+        "name": "",
+        "cert": "/usr/src/node-red/cert.pem",
+        "key": "/usr/src/node-red/key.pem",
+        "ca": "/usr/src/node-red/ca.pem",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": true
+    },
+    {
+        "id": "4769e867.58654",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Statistik",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "6855b0e7.de2ce",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Test TX",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "a6c5ad4b.7ec0d",
+        "type": "ui_group",
+        "z": "",
+        "d": true,
+        "name": "Default",
+        "tab": "6855b0e7.de2ce",
+        "order": 1,
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "9461f408.26705",
+        "type": "ui_group",
+        "z": "",
+        "name": "Config UI",
+        "tab": "fed10b08.18f048",
+        "order": 1,
+        "disp": true,
+        "width": 15,
+        "collapse": false
+    },
+    {
+        "id": "fed10b08.18f048",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Blockchain Explorer",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "b82ac952.6e4488",
+        "type": "ui_spacer",
+        "name": "spacer",
+        "group": "a6c5ad4b.7ec0d",
+        "order": 5,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "d850dcb9.c84a58",
+        "type": "ui_group",
+        "z": "",
+        "name": "Machine UI",
+        "tab": "fed10b08.18f048",
+        "order": 3,
+        "disp": true,
+        "width": 30,
+        "collapse": false
+    },
+    {
+        "id": "64b2323f.aa71c4",
+        "type": "ui_group",
+        "z": "",
+        "name": "Contracts UI",
+        "tab": "fed10b08.18f048",
+        "order": 4,
+        "disp": true,
+        "width": 30,
+        "collapse": false
+    },
+    {
+        "id": "4fb2055a.c1e994",
+        "type": "ui_spacer",
+        "name": "spacer",
+        "group": "9461f408.26705",
+        "order": 2,
+        "width": 5,
+        "height": 1
+    },
+    {
+        "id": "cb3a8913.e68088",
+        "type": "ui_spacer",
+        "name": "spacer",
+        "group": "933f4189.8b4d18",
+        "order": 3,
+        "width": 9,
+        "height": 1
+    },
+    {
+        "id": "3627d8ae.7c5da",
+        "type": "ui_spacer",
+        "name": "spacer",
+        "group": "d850dcb9.c84a58",
+        "order": 2,
+        "width": 10,
+        "height": 1
+    },
+    {
+        "id": "8c070c63.998d4",
+        "type": "ui_spacer",
+        "name": "spacer",
+        "group": "5e46a468.baa314",
+        "order": 2,
+        "width": 10,
+        "height": 1
+    },
+    {
+        "id": "e555ba6.e50a448",
+        "type": "ui_spacer",
+        "name": "spacer",
+        "group": "5e46a468.baa314",
+        "order": 4,
+        "width": 4,
+        "height": 1
+    },
+    {
+        "id": "381f6375.62cbcc",
+        "type": "ui_spacer",
+        "name": "spacer",
+        "group": "5e46a468.baa314",
+        "order": 7,
+        "width": 10,
+        "height": 1
+    },
+    {
+        "id": "95fd2b47.d81448",
+        "type": "ui_spacer",
+        "name": "spacer",
+        "group": "5e46a468.baa314",
+        "order": 8,
+        "width": 4,
+        "height": 1
+    },
+    {
+        "id": "82f3f4c.9214108",
+        "type": "ui_spacer",
+        "name": "spacer",
+        "group": "5e46a468.baa314",
+        "order": 9,
+        "width": 10,
+        "height": 1
+    },
+    {
+        "id": "6858edeb.ad1524",
+        "type": "ui_spacer",
+        "name": "spacer",
+        "group": "5e46a468.baa314",
+        "order": 11,
+        "width": 4,
+        "height": 1
+    },
+    {
+        "id": "8314c9c7.4341b8",
+        "type": "ui_spacer",
+        "name": "spacer",
+        "group": "5e46a468.baa314",
+        "order": 12,
+        "width": 10,
+        "height": 1
+    },
+    {
+        "id": "e0d07e17.578ef",
+        "type": "ui_spacer",
+        "name": "spacer",
+        "group": "5e46a468.baa314",
+        "order": 13,
+        "width": 4,
+        "height": 1
+    },
+    {
+        "id": "8b858fd0.f68e2",
+        "type": "ui_spacer",
+        "name": "spacer",
+        "group": "5e46a468.baa314",
+        "order": 16,
+        "width": 10,
+        "height": 1
+    },
+    {
+        "id": "7526803d.71626",
+        "type": "ui_spacer",
+        "name": "spacer",
+        "group": "5e46a468.baa314",
+        "order": 18,
+        "width": 4,
+        "height": 1
+    },
+    {
+        "id": "6ba0852a.9c4a8c",
+        "type": "ui_spacer",
+        "name": "spacer",
+        "group": "5e46a468.baa314",
+        "order": 19,
+        "width": 10,
+        "height": 1
+    },
+    {
+        "id": "76ca78d1.221ab8",
+        "type": "ui_spacer",
+        "name": "spacer",
+        "group": "5e46a468.baa314",
+        "order": 20,
+        "width": 4,
+        "height": 1
+    },
+    {
+        "id": "f94d6fc8.55ebc",
+        "type": "ui_spacer",
+        "name": "spacer",
+        "group": "5e46a468.baa314",
+        "order": 21,
+        "width": 10,
+        "height": 1
+    },
+    {
+        "id": "a0546adc.7182c",
+        "type": "mqtt in",
+        "z": "70de23d1.e038a4",
+        "name": "",
+        "topic": "kosmos/machine-data/+/Sensor/+/Update",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "5e822ce4.c7fbdc",
+        "x": 240,
+        "y": 100,
+        "wires": [
+            [
+                "59579a0e.8a9554"
+            ]
+        ]
+    },
+    {
+        "id": "59579a0e.8a9554",
+        "type": "function",
+        "z": "70de23d1.e038a4",
+        "name": "Evaluate BCC_CONFIG",
+        "func": "var myBccConfig = JSON.parse(env.get(\"BCC_CONFIG\"));\n\nfor (let configuredMqttTopicKey in myBccConfig) {\n let configuredMqttTopic = myBccConfig[configuredMqttTopicKey];\n\n let mqttTopic = configuredMqttTopic[\"mqtt-topic\"];\n\n // Move to next configured MQTT-Topic if this one is not for the current MQTT-Topic\n if (msg.topic !== mqttTopic) continue;\n\n let bcApiEndpointUrl = configuredMqttTopic.blockchain.endpoint;\n\n // Create BC-API Data object\n let bcApiData = {\n customerId: myBccConfig.customerId\n };\n\n for (let dataMappingKey in configuredMqttTopic.blockchain[\"data-mapping\"]) {\n let dataMapping = configuredMqttTopic.blockchain[\"data-mapping\"][dataMappingKey];\n\n // Evaluate data-mappings - TODO: Avoid eval if possible\n let dataEntryColumn = eval(dataMapping.column);\n let dataEntryValue = eval(dataMapping.value);\n\n // Cast/parse data to its column type\n switch (dataEntryColumn.type){\n case \"integer\":\n bcApiData[dataEntryColumn.name] = parseInt(dataEntryValue);\n break;\n default:\n bcApiData[dataEntryColumn.name] = dataEntryValue;\n break;\n }\n \n }\n\n // Send with unique msgid\n node.send({\n topic: mqttTopic,\n msgid: RED.util.generateId(),\n url: bcApiEndpointUrl,\n payload: bcApiData\n });\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 290,
+        "y": 200,
+        "wires": [
+            [
+                "3fd9414c.183f7e",
+                "361df1ea.a0060e",
+                "8d9fefba.bd641"
+            ]
+        ]
+    },
+    {
+        "id": "3fd9414c.183f7e",
+        "type": "function",
+        "z": "70de23d1.e038a4",
+        "name": "Buffer last 20 requests and responses",
+        "func": "var buffer = context.get(\"buffer\") || [];\n\nfunction isRequest() {\n    return !msg.hasOwnProperty(\"headers\");\n}\n\nfunction changeResonseBuffer() {\n    for (let entryNum in buffer) {\n        // Finds our message in the buffer\n        if (buffer[entryNum].id == msg.msgid) {\n            let currentDate = new Date();\n            let latency = currentDate - buffer[entryNum].requestDate;\n            buffer[entryNum].date = currentDate.toLocaleString() + \" (\" + latency + \"ms)\";\n            buffer[entryNum].resonse = msg.statusMessage;\n            break;\n        }\n    }\n}\n\nif (isRequest()) {\n    var entry = {};\n\n    entry.id = msg.msgid;\n    entry.requestDate = new Date();\n    entry.date = entry.requestDate.toLocaleString();\n    entry.topic = msg.topic;\n    entry.value = msg.payload;\n    entry.resonse = \"Requesting...\";\n    entry.url = msg.url;\n\n    buffer.push(entry);\n} else {\n    changeResonseBuffer();\n}\n\n// Only the keep 20 entries in buffer\nbuffer = buffer.slice(-20);\ncontext.set(\"buffer\", buffer);\n\nreturn {\n    payload: buffer\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 590,
+        "y": 280,
+        "wires": [
+            [
+                "476622b9.de1044"
+            ]
+        ]
+    },
+    {
+        "id": "ecfd6800.5b3a88",
+        "type": "ui_text",
+        "z": "d9594b8f.641b7",
+        "group": "5e46a468.baa314",
+        "order": 10,
+        "width": 6,
+        "height": 2,
+        "name": "",
+        "label": "Übertragene API-Aufrufe",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 890,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "7e7090d0.db1c68",
+        "type": "ui_text",
+        "z": "d9594b8f.641b7",
+        "group": "5e46a468.baa314",
+        "order": 17,
+        "width": 6,
+        "height": 2,
+        "name": "",
+        "label": "Übertragungsfehler",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 870,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "4da2815e.774d5",
+        "type": "ui_button",
+        "z": "d9594b8f.641b7",
+        "name": "Live-Status",
+        "group": "5e46a468.baa314",
+        "order": 6,
+        "width": 4,
+        "height": 3,
+        "passthru": false,
+        "label": "",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "{{msg.background}}",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 1130,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ba32a7f3.30c248",
+        "type": "ui_button",
+        "z": "d9594b8f.641b7",
+        "name": "Alltime Status",
+        "group": "5e46a468.baa314",
+        "order": 15,
+        "width": 4,
+        "height": 3,
+        "passthru": false,
+        "label": "{{msg.payload}}",
+        "tooltip": "",
+        "color": "white",
+        "bgcolor": "{{msg.background}}",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 1120,
+        "y": 220,
+        "wires": [
+            [
+                "7a7d3e4f.376958"
+            ]
+        ]
+    },
+    {
+        "id": "7a7d3e4f.376958",
+        "type": "function",
+        "z": "d9594b8f.641b7",
+        "name": "Rot -> grün - nur durch Button ",
+        "func": "if (msg.payload == \"ba32a7f3.30c248\"){\n // Button wurde gedrückt\n msg.payload = \"\";\n msg.background = \"green\"\n return msg;\n} else if (msg.background === \"red\"){\n msg.payload = \"Zurücksetzen\";\n return msg;\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 890,
+        "y": 220,
+        "wires": [
+            [
+                "ba32a7f3.30c248"
+            ]
+        ]
+    },
+    {
+        "id": "8d9fefba.bd641",
+        "type": "http request",
+        "z": "70de23d1.e038a4",
+        "name": "BC-API-TRANSACT",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "body",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 560,
+        "y": 200,
+        "wires": [
+            [
+                "a7d9c94c.efdd18",
+                "fd0b9758.f140d8"
+            ]
+        ]
+    },
+    {
+        "id": "4dda966b.20c8a8",
+        "type": "link in",
+        "z": "d9594b8f.641b7",
+        "name": "HTTP STATUSCODE",
+        "links": [
+            "a7d9c94c.efdd18",
+            "361df1ea.a0060e"
+        ],
+        "x": 315,
+        "y": 180,
+        "wires": [
+            [
+                "b017202f.62024"
+            ]
+        ]
+    },
+    {
+        "id": "a7d9c94c.efdd18",
+        "type": "link out",
+        "z": "70de23d1.e038a4",
+        "name": "STATISTIK",
+        "links": [
+            "4dda966b.20c8a8"
+        ],
+        "x": 695,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "b017202f.62024",
+        "type": "function",
+        "z": "d9594b8f.641b7",
+        "name": "HTTP Response auswerten",
+        "func": "// Outputs\n// * Status Button\n// * Total count of Messages\n// * Count of successfull transactions\n// * Count of error messages\n\nvar totalMessageCount = context.get(\"totalMessageCount\") || 0;\nvar successMessageCount = context.get(\"successMessageCount\") || 0;\nvar errorMessageCount = context.get(\"errorMessageCount\") || 0;\nvar background = \"green\";\n\nfunction isRequest() {\n    return !msg.hasOwnProperty(\"statusCode\");\n}\n\nfunction isSuccessResponse() {\n    return msg.statusCode.toString()[0] === \"2\";\n}\n\nif (isRequest()) {\n    totalMessageCount++;\n    context.set(\"totalMessageCount\", totalMessageCount);\n    background = \"yellow\";\n\n} else {\n    if (isSuccessResponse()) {\n        successMessageCount++;\n        context.set(\"successMessageCount\", successMessageCount);\n        background = \"green\";\n    } else {\n        errorMessageCount++;\n        context.set(\"errorMessageCount\", errorMessageCount);\n        background = \"red\";\n    }\n}\n\nreturn [\n    {\n        background: background\n    },\n    {\n        payload: totalMessageCount\n    },\n    {\n        payload: successMessageCount\n    },\n    {\n        payload: errorMessageCount\n    }\n];",
+        "outputs": 4,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 500,
+        "y": 180,
+        "wires": [
+            [
+                "7a7d3e4f.376958",
+                "4da2815e.774d5"
+            ],
+            [
+                "ee33592.7b74da8"
+            ],
+            [
+                "ecfd6800.5b3a88"
+            ],
+            [
+                "7e7090d0.db1c68"
+            ]
+        ]
+    },
+    {
+        "id": "9e5ae29a.f1cb6",
+        "type": "ui_text",
+        "z": "d9594b8f.641b7",
+        "group": "5e46a468.baa314",
+        "order": 5,
+        "width": 6,
+        "height": 3,
+        "name": "Live-Status (aktuelle BC-Transaktion)",
+        "label": "",
+        "format": "Live-Status<br>(aktuelle BC-Transaktion)",
+        "layout": "row-right",
+        "x": 1030,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "e3428807.5f7938",
+        "type": "ui_text",
+        "z": "d9594b8f.641b7",
+        "group": "5e46a468.baa314",
+        "order": 14,
+        "width": 6,
+        "height": 3,
+        "name": " All-Time Status",
+        "label": "",
+        "format": " All-Time Status",
+        "layout": "row-right",
+        "x": 1120,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "5343073.4506778",
+        "type": "ui_text_input",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "",
+        "label": "Topic",
+        "tooltip": "",
+        "group": "a6c5ad4b.7ec0d",
+        "order": 1,
+        "width": 4,
+        "height": 1,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "mqtt-topic",
+        "x": 450,
+        "y": 80,
+        "wires": [
+            [
+                "b8b67f11.c08968"
+            ]
+        ]
+    },
+    {
+        "id": "aa9d23bd.b198f8",
+        "type": "inject",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "kosmos/machine-data/45678/Sensor/1234/Update",
+        "payloadType": "str",
+        "x": 270,
+        "y": 80,
+        "wires": [
+            [
+                "5343073.4506778"
+            ]
+        ]
+    },
+    {
+        "id": "8b0237ed.c5d57",
+        "type": "ui_text_input",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "",
+        "label": "Data",
+        "tooltip": "",
+        "group": "a6c5ad4b.7ec0d",
+        "order": 3,
+        "width": 4,
+        "height": 1,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "mqtt-data",
+        "x": 450,
+        "y": 140,
+        "wires": [
+            [
+                "b8b67f11.c08968"
+            ]
+        ]
+    },
+    {
+        "id": "4bcc624e.f5865c",
+        "type": "inject",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[ [\"15\"], [\"3\"] ]",
+        "payloadType": "str",
+        "x": 260,
+        "y": 140,
+        "wires": [
+            [
+                "8b0237ed.c5d57"
+            ]
+        ]
+    },
+    {
+        "id": "b1e417d1.680b48",
+        "type": "mqtt out",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "broker": "5e822ce4.c7fbdc",
+        "x": 950,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "b8b67f11.c08968",
+        "type": "function",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "SET FLOW VAR",
+        "func": "flow.set(msg.topic, msg.payload);",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 640,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8680b9ac.9bb2b",
+        "type": "ui_button",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "",
+        "group": "a6c5ad4b.7ec0d",
+        "order": 2,
+        "width": 2,
+        "height": 1,
+        "passthru": false,
+        "label": "Inject with MQTT-Broker",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 550,
+        "y": 240,
+        "wires": [
+            [
+                "ee3e7104.485ca"
+            ]
+        ]
+    },
+    {
+        "id": "221ca5f8.cf5f22",
+        "type": "ui_button",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "",
+        "group": "a6c5ad4b.7ec0d",
+        "order": 4,
+        "width": 2,
+        "height": 1,
+        "passthru": false,
+        "label": "Inject without MQTT-Broker",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 540,
+        "y": 340,
+        "wires": [
+            [
+                "661d980f.58007"
+            ]
+        ]
+    },
+    {
+        "id": "20dcbfbd.fa604",
+        "type": "link out",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "INJECTMQTT",
+        "links": [
+            "1f89659b.3a78e2"
+        ],
+        "x": 915,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "1f89659b.3a78e2",
+        "type": "link in",
+        "z": "70de23d1.e038a4",
+        "name": "INJECTMQTT",
+        "links": [
+            "20dcbfbd.fa604",
+            "43851f19.412118"
+        ],
+        "x": 375,
+        "y": 40,
+        "wires": [
+            [
+                "59579a0e.8a9554"
+            ]
+        ]
+    },
+    {
+        "id": "661d980f.58007",
+        "type": "function",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "Create Message",
+        "func": "var topic = flow.get(\"mqtt-topic\");\nvar data = flow.get(\"mqtt-data\");\n\nreturn {\n topic: topic,\n payload: {\n \"$$schema\": \"data-formal.json\",\n \"timestamp\": 1585902707,\n \"columns\": [\n {\n \"name\": \"value\",\n \"description\": \"metric\",\n \"type\": \"integer\"\n },\n {\n \"name\": \"quality\",\n \"description\": \"quality of the metric\",\n \"type\": \"integer\"\n }\n ],\n \"data\": eval(data),\n \"signature\": \"iQJNBAABCAA3FiEEs9+aTrHmy7aElz5+uqd9AltsqzQFAl6JoLkZHGphbi51bnRlcmJyaW5rQGlub3ZleC5kZQAKCRC6p30CW2yrNFzWD/wKrp57+VJi2RcZHN7TwiiYeo7uV9kHjiWYOTK5Y2okniDfczEsouwvGvETMiIDn+XJw6qzFc7zGdL12VzoYiIYJKXnzhHPXmifLdfRJ5y+rQ2LqRCzMzGwsvoNhtn9N5uyvbq7GunPVQIFNz8eOzDoYJAj7CQl+wsWl1+P8IgNfCOVsC43FFaQ+gIiSY9rYC/1H4AJp+lZ3QclKDgMbbbenCwelcoS0s30W0fE9X2J9qYkWMgGkMsVSqTD70DTmnmRzIKPrb9AY67WL+bjxSsQjTblxsP+sPQTm/gXjkt1NhAv2o+8lP46ObGx/u3+TbQnwfRccT6TTAYLEQxlyToO5pDutUI17uElppORMGX/U4+kmkD24U7ZlMsGeNZfbHBkqIq66kEo3gDk9+w/Y6Fuuy9GUzTTkFDZoby5bfWToavgU6b42Su9IRQ6lPAcD4r1ThRI/uUJYUt8TZsPz2ePLazsmWHujok49NwstEEqXArPQQIRdVuUitaSegciXxU2G/auAird00rF7wn44v4TNhlJa453XrHgaXSEFKiY+D2JUGia840aTuzgU0PALp6KJibcLcUtBDyyYMUufDXDCXrbmEFiCibvYegkaOCse3+fp+9MSfHy7koTY3poWR92U5ky/JwaII90feiKjXUh7VrWGqn/moBloj5enI3sUg==\"\n }\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 780,
+        "y": 340,
+        "wires": [
+            [
+                "20dcbfbd.fa604"
+            ]
+        ]
+    },
+    {
+        "id": "ee3e7104.485ca",
+        "type": "function",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "Create Message",
+        "func": "var topic = flow.get(\"mqtt-topic\");\nvar data = flow.get(\"mqtt-data\");\n\nreturn {\n topic: topic,\n payload: {\n \"$$schema\": \"data-formal.json\",\n \"timestamp\": 1585902707,\n \"columns\": [\n {\n \"name\": \"value\",\n \"description\": \"metric\",\n \"type\": \"integer\"\n },\n {\n \"name\": \"quality\",\n \"description\": \"quality of the metric\",\n \"type\": \"integer\"\n }\n ],\n \"data\": eval(data),\n \"signature\": \"iQJNBAABCAA3FiEEs9+aTrHmy7aElz5+uqd9AltsqzQFAl6JoLkZHGphbi51bnRlcmJyaW5rQGlub3ZleC5kZQAKCRC6p30CW2yrNFzWD/wKrp57+VJi2RcZHN7TwiiYeo7uV9kHjiWYOTK5Y2okniDfczEsouwvGvETMiIDn+XJw6qzFc7zGdL12VzoYiIYJKXnzhHPXmifLdfRJ5y+rQ2LqRCzMzGwsvoNhtn9N5uyvbq7GunPVQIFNz8eOzDoYJAj7CQl+wsWl1+P8IgNfCOVsC43FFaQ+gIiSY9rYC/1H4AJp+lZ3QclKDgMbbbenCwelcoS0s30W0fE9X2J9qYkWMgGkMsVSqTD70DTmnmRzIKPrb9AY67WL+bjxSsQjTblxsP+sPQTm/gXjkt1NhAv2o+8lP46ObGx/u3+TbQnwfRccT6TTAYLEQxlyToO5pDutUI17uElppORMGX/U4+kmkD24U7ZlMsGeNZfbHBkqIq66kEo3gDk9+w/Y6Fuuy9GUzTTkFDZoby5bfWToavgU6b42Su9IRQ6lPAcD4r1ThRI/uUJYUt8TZsPz2ePLazsmWHujok49NwstEEqXArPQQIRdVuUitaSegciXxU2G/auAird00rF7wn44v4TNhlJa453XrHgaXSEFKiY+D2JUGia840aTuzgU0PALp6KJibcLcUtBDyyYMUufDXDCXrbmEFiCibvYegkaOCse3+fp+9MSfHy7koTY3poWR92U5ky/JwaII90feiKjXUh7VrWGqn/moBloj5enI3sUg==\"\n }\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 780,
+        "y": 240,
+        "wires": [
+            [
+                "b1e417d1.680b48"
+            ]
+        ]
+    },
+    {
+        "id": "361df1ea.a0060e",
+        "type": "link out",
+        "z": "70de23d1.e038a4",
+        "name": "AMPEL",
+        "links": [
+            "4dda966b.20c8a8"
+        ],
+        "x": 435,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "476622b9.de1044",
+        "type": "ui_template",
+        "z": "70de23d1.e038a4",
+        "group": "20dcd6f2.879e02",
+        "name": "HTTP-Log",
+        "order": 1,
+        "width": 30,
+        "height": 15,
+        "format": "<style>\n.width200 {\n word-wrap: anywhere;\n width: 200px;\n}\n.width300 {\n word-wrap: anywhere;\n width: 300px;\n}\n</style>\n\n<h2>Blockchain Response Log</h2>\n<table id=\"table\" border=\"1\">\n <tr>\n <th>Zeit</th>\n <th>Topic</th> \n <th>Endpoint</th>\n <th>Data</th>\n <th>Response</th>\n </tr>\n <tbody>\n <tr ng-repeat=\"row in msg.payload\">\n <td>{{row.date.toLocaleString()}}</td>\n <td class=\"width300\">{{row.topic}}</td>\n <td class=\"width300\">{{row.url}}</td>\n <td class=\"width300\">{{row.value}}</td>\n <td class=\"width300\">{{row.resonse}}</td>\n </tr>\n </tbody>\n</table>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "x": 870,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d8b2f933.9ec538",
+        "type": "inject",
+        "z": "f7247905.828f38",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "BCC_CONFIG",
+        "payloadType": "env",
+        "x": 330,
+        "y": 160,
+        "wires": [
+            [
+                "d4b90124.c298e8"
+            ]
+        ]
+    },
+    {
+        "id": "12bb9cca.201d8b",
+        "type": "ui_template",
+        "z": "f7247905.828f38",
+        "group": "e5f204d6.08dcf8",
+        "name": "Display JSON String",
+        "order": 1,
+        "width": 30,
+        "height": 15,
+        "format": "<pre><code>{{msg.payload}}</code></pre>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "x": 840,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d4b90124.c298e8",
+        "type": "function",
+        "z": "f7247905.828f38",
+        "name": "PrettyPrint JSON String",
+        "func": "// Generates PrettyPrinted JSON from msg.payload\n\nmsg.payload = JSON.parse(msg.payload);\nmsg.payload = JSON.stringify(msg.payload, undefined, 4); \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 570,
+        "y": 160,
+        "wires": [
+            [
+                "12bb9cca.201d8b"
+            ]
+        ]
+    },
+    {
+        "id": "b9f93be.045c1c8",
+        "type": "catch",
+        "z": "70de23d1.e038a4",
+        "name": "",
+        "scope": null,
+        "uncaught": true,
+        "x": 380,
+        "y": 400,
+        "wires": [
+            [
+                "7d2fea18.c2abd4"
+            ]
+        ]
+    },
+    {
+        "id": "7d2fea18.c2abd4",
+        "type": "debug",
+        "z": "70de23d1.e038a4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 630,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "fd0b9758.f140d8",
+        "type": "function",
+        "z": "70de23d1.e038a4",
+        "name": "Handle StatusCode",
+        "func": "if (msg.statusCode.toString()[0] !== \"2\"){\n msg.statusMessage = \"Error \"+msg.statusCode+\": \"+msg.payload; \n}else{\n msg.statusMessage = msg.payload;\n}\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 810,
+        "y": 200,
+        "wires": [
+            [
+                "3fd9414c.183f7e"
+            ]
+        ]
+    },
+    {
+        "id": "250983fc.b9f6c4",
+        "type": "ui_button",
+        "z": "c70ed392.30d548",
+        "name": "",
+        "group": "d850dcb9.c84a58",
+        "order": 1,
+        "width": 20,
+        "height": 1,
+        "passthru": false,
+        "label": "Get Machines",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 140,
+        "y": 80,
+        "wires": [
+            [
+                "ac61174b.7627a"
+            ]
+        ]
+    },
+    {
+        "id": "40aded81.b10d64",
+        "type": "ui_text_input",
+        "z": "c70ed392.30d548",
+        "name": "",
+        "label": "CustomerId",
+        "tooltip": "Not used yet",
+        "group": "9461f408.26705",
+        "order": 1,
+        "width": 10,
+        "height": 1,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "CustomerId",
+        "x": 160,
+        "y": 40,
+        "wires": [
+            [
+                "a761bb65.c0597"
+            ]
+        ]
+    },
+    {
+        "id": "ac61174b.7627a",
+        "type": "function",
+        "z": "c70ed392.30d548",
+        "name": "Generate Request",
+        "func": "let customerId = flow.get(\"CustomerId\") || \"asdasd\";\n\nreturn {\n headers: {\n \"Content-Type\": \"application/json\" \n },\n payload: { \n \"customerId\": customerId\n } \n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 350,
+        "y": 80,
+        "wires": [
+            [
+                "568a8d5c.752a44"
+            ]
+        ]
+    },
+    {
+        "id": "9e707cc4.078fe",
+        "type": "ui_template",
+        "z": "c70ed392.30d548",
+        "group": "d850dcb9.c84a58",
+        "name": "Machine Table",
+        "order": 3,
+        "width": 30,
+        "height": 3,
+        "format": "<style>\n#table tr td:nth-child(3), #table tr td:nth-child(8) {\n width: 200px;\n word-wrap: anywhere;\n}\n</style>\n\n<span ng-if=\"msg.payload.length === 0\">No Machines yet.</span>\n<table ng-if=\"msg.payload.length\" id=\"table\" border=\"1\" style=\"width: 1197px\">\n <tr>\n <th>Asset ID</th>\n <th>Balance</th> \n <th>Crash</th>\n <th>Customer ID</th>\n <th>Machine Desc</th>\n <th>Machine Name</th>\n <th>Manufacturer ID</th>\n <th>Prod Data</th>\n <th>Timestamp</th>\n </tr>\n <tbody>\n <tr ng-repeat=\"row in msg.payload\">\n <td ng-repeat=\"col in row\">{{col}}</td>\n </tr>\n </tbody>\n</table>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "x": 740,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "568a8d5c.752a44",
+        "type": "http request",
+        "z": "c70ed392.30d548",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "body",
+        "url": "http://kosmos-2017317103.eu-central-1.elb.amazonaws.com/api/machine",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 550,
+        "y": 80,
+        "wires": [
+            [
+                "9e707cc4.078fe"
+            ]
+        ]
+    },
+    {
+        "id": "a761bb65.c0597",
+        "type": "function",
+        "z": "c70ed392.30d548",
+        "name": "flow.set(msg.topic, msg.payload)",
+        "func": "flow.set(msg.topic, msg.payload)",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 390,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a626365f.273558",
+        "type": "ui_button",
+        "z": "c70ed392.30d548",
+        "name": "",
+        "group": "64b2323f.aa71c4",
+        "order": 1,
+        "width": 30,
+        "height": 1,
+        "passthru": false,
+        "label": "Get Contracts",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 120,
+        "y": 280,
+        "wires": [
+            [
+                "67f07107.444c68"
+            ]
+        ]
+    },
+    {
+        "id": "67f07107.444c68",
+        "type": "function",
+        "z": "c70ed392.30d548",
+        "name": "Generate Request",
+        "func": "let customerId = flow.get(\"CustomerId\") || \"asdasd\";\n\nreturn {\n headers: {\n \"Content-Type\": \"application/json\" \n },\n payload: { \n \"customerId\": customerId\n } \n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 330,
+        "y": 280,
+        "wires": [
+            [
+                "83027809.44106"
+            ]
+        ]
+    },
+    {
+        "id": "70f793d3.0bfefc",
+        "type": "ui_template",
+        "z": "c70ed392.30d548",
+        "group": "64b2323f.aa71c4",
+        "name": "Contracts Table",
+        "order": 2,
+        "width": 30,
+        "height": 3,
+        "format": "<style>\n#table tr td:nth-child(3) {\n width: 200px;\n word-wrap: anywhere;\n}\n</style>\n\n<span ng-if=\"msg.payload.length === 0\">No Contracts yet.</span>\n<table ng-if=\"msg.payload.length\" id=\"table\" border=\"1\">\n <tr>\n <th>Asset ID</th>\n <th>Balance</th> \n <th>Crash</th>\n <th>Customer ID</th>\n <th>Machine Desc</th>\n <th>Machine Name</th>\n <th>Manufacturer ID</th>\n <th>Prod Data</th>\n <th>Timestamp</th>\n </tr>\n <tbody>\n <tr ng-repeat=\"row in msg.payload\">\n <td ng-repeat=\"col in row\">{{col}}</td>\n </tr>\n </tbody>\n</table>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "x": 720,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "83027809.44106",
+        "type": "http request",
+        "z": "c70ed392.30d548",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "body",
+        "url": "http://kosmos-2017317103.eu-central-1.elb.amazonaws.com/api/contract",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 530,
+        "y": 280,
+        "wires": [
+            [
+                "70f793d3.0bfefc"
+            ]
+        ]
+    },
+    {
+        "id": "c974e970.6e2cf",
+        "type": "ui_text_input",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "",
+        "label": "Topic Crash",
+        "tooltip": "",
+        "group": "a6c5ad4b.7ec0d",
+        "order": 6,
+        "width": 4,
+        "height": 1,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "mqtt-topic-crash",
+        "x": 410,
+        "y": 420,
+        "wires": [
+            [
+                "300499ac.98d2be"
+            ]
+        ]
+    },
+    {
+        "id": "6b2b5af.3318fa4",
+        "type": "inject",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "kosmos/machine-data/812d0da1-0c20-42b5-8707-35b21de27680/Crash",
+        "payloadType": "str",
+        "x": 210,
+        "y": 420,
+        "wires": [
+            [
+                "c974e970.6e2cf"
+            ]
+        ]
+    },
+    {
+        "id": "81643863.cba5e8",
+        "type": "ui_text_input",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "",
+        "label": " Data Crash",
+        "tooltip": "",
+        "group": "a6c5ad4b.7ec0d",
+        "order": 8,
+        "width": 4,
+        "height": 1,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "mqtt-data-crash",
+        "x": 410,
+        "y": 480,
+        "wires": [
+            [
+                "300499ac.98d2be"
+            ]
+        ]
+    },
+    {
+        "id": "a141ce1c.e6b598",
+        "type": "inject",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "str",
+        "x": 230,
+        "y": 480,
+        "wires": [
+            [
+                "81643863.cba5e8"
+            ]
+        ]
+    },
+    {
+        "id": "300499ac.98d2be",
+        "type": "function",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "SET FLOW VAR",
+        "func": "flow.set(msg.topic, msg.payload);",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 660,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3f415db4.746e32",
+        "type": "mqtt out",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "broker": "5e822ce4.c7fbdc",
+        "x": 910,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "d6ada3a9.8e2008",
+        "type": "ui_button",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "",
+        "group": "a6c5ad4b.7ec0d",
+        "order": 7,
+        "width": 2,
+        "height": 1,
+        "passthru": false,
+        "label": "Inject crash MQTT",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 490,
+        "y": 560,
+        "wires": [
+            [
+                "5cc6ff20.bc2f68"
+            ]
+        ]
+    },
+    {
+        "id": "f9f59a4.13205e8",
+        "type": "ui_button",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "",
+        "group": "a6c5ad4b.7ec0d",
+        "order": 9,
+        "width": 2,
+        "height": 1,
+        "passthru": false,
+        "label": "Inject crash direct",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 470,
+        "y": 660,
+        "wires": [
+            [
+                "e470a9a7.df3a8"
+            ]
+        ]
+    },
+    {
+        "id": "43851f19.412118",
+        "type": "link out",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "INJECTMQTT",
+        "links": [
+            "1f89659b.3a78e2"
+        ],
+        "x": 875,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "e470a9a7.df3a8",
+        "type": "function",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "Create Message",
+        "func": "var topic = flow.get(\"mqtt-topic\");\nvar data = flow.get(\"mqtt-data\");\n\nreturn {\n topic: topic,\n payload: {\n \"$$schema\": \"data-formal.json\",\n \"timestamp\": 1585902707,\n \"columns\": [\n {\n \"name\": \"value\",\n \"description\": \"metric\",\n \"type\": \"integer\"\n },\n {\n \"name\": \"quality\",\n \"description\": \"quality of the metric\",\n \"type\": \"integer\"\n }\n ],\n \"data\": eval(data),\n \"signature\": \"iQJNBAABCAA3FiEEs9+aTrHmy7aElz5+uqd9AltsqzQFAl6JoLkZHGphbi51bnRlcmJyaW5rQGlub3ZleC5kZQAKCRC6p30CW2yrNFzWD/wKrp57+VJi2RcZHN7TwiiYeo7uV9kHjiWYOTK5Y2okniDfczEsouwvGvETMiIDn+XJw6qzFc7zGdL12VzoYiIYJKXnzhHPXmifLdfRJ5y+rQ2LqRCzMzGwsvoNhtn9N5uyvbq7GunPVQIFNz8eOzDoYJAj7CQl+wsWl1+P8IgNfCOVsC43FFaQ+gIiSY9rYC/1H4AJp+lZ3QclKDgMbbbenCwelcoS0s30W0fE9X2J9qYkWMgGkMsVSqTD70DTmnmRzIKPrb9AY67WL+bjxSsQjTblxsP+sPQTm/gXjkt1NhAv2o+8lP46ObGx/u3+TbQnwfRccT6TTAYLEQxlyToO5pDutUI17uElppORMGX/U4+kmkD24U7ZlMsGeNZfbHBkqIq66kEo3gDk9+w/Y6Fuuy9GUzTTkFDZoby5bfWToavgU6b42Su9IRQ6lPAcD4r1ThRI/uUJYUt8TZsPz2ePLazsmWHujok49NwstEEqXArPQQIRdVuUitaSegciXxU2G/auAird00rF7wn44v4TNhlJa453XrHgaXSEFKiY+D2JUGia840aTuzgU0PALp6KJibcLcUtBDyyYMUufDXDCXrbmEFiCibvYegkaOCse3+fp+9MSfHy7koTY3poWR92U5ky/JwaII90feiKjXUh7VrWGqn/moBloj5enI3sUg==\"\n }\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 740,
+        "y": 660,
+        "wires": [
+            [
+                "43851f19.412118"
+            ]
+        ]
+    },
+    {
+        "id": "5cc6ff20.bc2f68",
+        "type": "function",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "Create Message",
+        "func": "var topic = flow.get(\"mqtt-topic\");\nvar data = flow.get(\"mqtt-data\");\n\nreturn {\n topic: topic,\n payload: {\n \"$$schema\": \"data-formal.json\",\n \"timestamp\": 1585902707,\n \"columns\": [\n {\n \"name\": \"value\",\n \"description\": \"metric\",\n \"type\": \"integer\"\n },\n {\n \"name\": \"quality\",\n \"description\": \"quality of the metric\",\n \"type\": \"integer\"\n }\n ],\n \"data\": eval(data),\n \"signature\": \"iQJNBAABCAA3FiEEs9+aTrHmy7aElz5+uqd9AltsqzQFAl6JoLkZHGphbi51bnRlcmJyaW5rQGlub3ZleC5kZQAKCRC6p30CW2yrNFzWD/wKrp57+VJi2RcZHN7TwiiYeo7uV9kHjiWYOTK5Y2okniDfczEsouwvGvETMiIDn+XJw6qzFc7zGdL12VzoYiIYJKXnzhHPXmifLdfRJ5y+rQ2LqRCzMzGwsvoNhtn9N5uyvbq7GunPVQIFNz8eOzDoYJAj7CQl+wsWl1+P8IgNfCOVsC43FFaQ+gIiSY9rYC/1H4AJp+lZ3QclKDgMbbbenCwelcoS0s30W0fE9X2J9qYkWMgGkMsVSqTD70DTmnmRzIKPrb9AY67WL+bjxSsQjTblxsP+sPQTm/gXjkt1NhAv2o+8lP46ObGx/u3+TbQnwfRccT6TTAYLEQxlyToO5pDutUI17uElppORMGX/U4+kmkD24U7ZlMsGeNZfbHBkqIq66kEo3gDk9+w/Y6Fuuy9GUzTTkFDZoby5bfWToavgU6b42Su9IRQ6lPAcD4r1ThRI/uUJYUt8TZsPz2ePLazsmWHujok49NwstEEqXArPQQIRdVuUitaSegciXxU2G/auAird00rF7wn44v4TNhlJa453XrHgaXSEFKiY+D2JUGia840aTuzgU0PALp6KJibcLcUtBDyyYMUufDXDCXrbmEFiCibvYegkaOCse3+fp+9MSfHy7koTY3poWR92U5ky/JwaII90feiKjXUh7VrWGqn/moBloj5enI3sUg==\"\n }\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 740,
+        "y": 560,
+        "wires": [
+            [
+                "3f415db4.746e32"
+            ]
+        ]
+    },
+    {
+        "id": "ee33592.7b74da8",
+        "type": "ui_text",
+        "z": "d9594b8f.641b7",
+        "group": "5e46a468.baa314",
+        "order": 3,
+        "width": 6,
+        "height": 2,
+        "name": "",
+        "label": "Gesamte Nachrichten",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 880,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "a0e97f09.4b01a",
+        "type": "http request",
+        "z": "d9594b8f.641b7",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "body",
+        "url": "http://kosmos-2017317103.eu-central-1.elb.amazonaws.com/health",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 850,
+        "y": 580,
+        "wires": [
+            [
+                "53477e1d.f4f94",
+                "5a63d982.2e1368"
+            ]
+        ]
+    },
+    {
+        "id": "53477e1d.f4f94",
+        "type": "ui_text",
+        "z": "d9594b8f.641b7",
+        "group": "5e46a468.baa314",
+        "order": 1,
+        "width": 20,
+        "height": 1,
+        "name": "Health",
+        "label": "Health",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1110,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "263472a4.2a4006",
+        "type": "function",
+        "z": "d9594b8f.641b7",
+        "name": "Generate Request",
+        "func": "var myBccConfig = JSON.parse(env.get(\"BCC_CONFIG\"));\nlet customerId = myBccConfig.customerId;\n\nreturn {\n headers: {\n \"Content-Type\": \"application/json\" \n },\n payload: { \n \"customerId\": customerId\n } \n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 610,
+        "y": 540,
+        "wires": [
+            [
+                "a0e97f09.4b01a",
+                "53477e1d.f4f94"
+            ]
+        ]
+    },
+    {
+        "id": "e71f3ca6.1ef8e",
+        "type": "inject",
+        "z": "d9594b8f.641b7",
+        "name": "Healthcheck Intervall",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 380,
+        "y": 540,
+        "wires": [
+            [
+                "263472a4.2a4006"
+            ]
+        ]
+    },
+    {
+        "id": "8a08ec3e.e5cca8",
+        "type": "catch",
+        "z": "f7247905.828f38",
+        "name": "",
+        "scope": null,
+        "uncaught": true,
+        "x": 520,
+        "y": 380,
+        "wires": [
+            [
+                "8b1f4071.386308"
+            ]
+        ]
+    },
+    {
+        "id": "8b1f4071.386308",
+        "type": "debug",
+        "z": "f7247905.828f38",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "f58f8bc.645d078",
+        "type": "catch",
+        "z": "d9594b8f.641b7",
+        "name": "",
+        "scope": null,
+        "uncaught": true,
+        "x": 700,
+        "y": 700,
+        "wires": [
+            [
+                "6a965e5d.edc5f8"
+            ]
+        ]
+    },
+    {
+        "id": "6a965e5d.edc5f8",
+        "type": "debug",
+        "z": "d9594b8f.641b7",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 910,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "3a621baf.9110cc",
+        "type": "catch",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "",
+        "scope": null,
+        "uncaught": true,
+        "x": 510.8833312988281,
+        "y": 776.88330078125,
+        "wires": [
+            [
+                "218a1280.3fda2e"
+            ]
+        ]
+    },
+    {
+        "id": "218a1280.3fda2e",
+        "type": "debug",
+        "z": "cd25a1d0.3ef9c8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "cebe15d7.5d691",
+        "type": "catch",
+        "z": "c70ed392.30d548",
+        "name": "",
+        "scope": null,
+        "uncaught": true,
+        "x": 460,
+        "y": 460,
+        "wires": [
+            [
+                "ec681ad7.2d04d8"
+            ]
+        ]
+    },
+    {
+        "id": "ec681ad7.2d04d8",
+        "type": "debug",
+        "z": "c70ed392.30d548",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 670,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "afd920c4.446c1",
+        "type": "inject",
+        "z": "d9594b8f.641b7",
+        "name": "Init",
+        "props": [
+            {
+                "p": "background",
+                "v": "green",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 520,
+        "y": 80,
+        "wires": [
+            [
+                "ba32a7f3.30c248",
+                "4da2815e.774d5"
+            ]
+        ]
+    },
+    {
+        "id": "59570a25.a3eab4",
+        "type": "http in",
+        "z": "70de23d1.e038a4",
+        "name": "",
+        "url": "/health",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 210,
+        "y": 580,
+        "wires": [
+            [
+                "cab6d232.317b7"
+            ]
+        ]
+    },
+    {
+        "id": "8b1fa836.30f2c8",
+        "type": "http response",
+        "z": "70de23d1.e038a4",
+        "name": "Response",
+        "statusCode": "",
+        "headers": {},
+        "x": 740,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "cab6d232.317b7",
+        "type": "function",
+        "z": "70de23d1.e038a4",
+        "name": "healthcheck",
+        "func": "if (msg.hasOwnProperty(\"status\")){\n    context.set(\"mqttstatus\",msg.status.text);\n    \n}else if (msg.hasOwnProperty(\"statusCode\")){\n    \n    context.set(\"bcstatus\", msg.payload);\n}else {\n    mqttstatus = context.get(\"mqttstatus\");\n    bcstatus = context.get(\"bcstatus\");\n\n\n    msg.statusCode = (\n        (mqttstatus === \"node-red:common.status.connected\") && \n        (bcstatus === \"OK\")\n        ) ? 200 : 500;\n        \n    msg.payload = { \n        mqttstatus: mqttstatus, \n        bcstatus: bcstatus\n    };\n    \n    return msg\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 500,
+        "y": 580,
+        "wires": [
+            [
+                "8b1fa836.30f2c8"
+            ]
+        ]
+    },
+    {
+        "id": "5433682b.e03228",
+        "type": "status",
+        "z": "70de23d1.e038a4",
+        "name": "",
+        "scope": [
+            "a0546adc.7182c"
+        ],
+        "x": 260,
+        "y": 520,
+        "wires": [
+            [
+                "cab6d232.317b7"
+            ]
+        ]
+    },
+    {
+        "id": "5a63d982.2e1368",
+        "type": "link out",
+        "z": "d9594b8f.641b7",
+        "name": "",
+        "links": [
+            "2f85f3e.77cc10c"
+        ],
+        "x": 1115,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "2f85f3e.77cc10c",
+        "type": "link in",
+        "z": "70de23d1.e038a4",
+        "name": "HEALTH",
+        "links": [
+            "5a63d982.2e1368"
+        ],
+        "x": 315,
+        "y": 480,
+        "wires": [
+            [
+                "cab6d232.317b7"
+            ]
+        ]
+    }
+]
