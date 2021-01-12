@@ -57,6 +57,11 @@ Die LKK-BCC macht folgendes:
     * Formatieren
     * Die Blockchain-HTTPS-API übergeben
 
+Als Blockchain wird Hyperledger Fabric verwendet, die Kommunikation findet über eine HTTP-API statt
+
+> Dokmentation der API: http://kosmos-2017317103.eu-central-1.elb.amazonaws.com/api/docs/
+  
+  
 ### Dashboard
 
 ~~In der Web-Oberfläche können zu Testzwecken MQTT-Nachrichten auch simuliert werden und und manuell an die Blockchain übertragen werden.~~
@@ -74,26 +79,8 @@ Das Dashboard bietet:
 * Log der an die Blockchain übertragenen Nachrichten und deren Antworten
 * Blockchain API Statistiken
 * Experimenteller Blockchain Explorer 
-  
-  
-## Implementierungsdetails
-TODO: In die Allgemeine beschreibung
 
-Die LKK-BCC das Docker-Netzwerk `kosmos-local` um sich:
-    * mit dem MQTT Broker zu verbinden
-    * bei der Vault zu Authentifizieren
-    * bei der Vault Zertifikate zu beziehen
 
-    > Dies kann mit der `docker-compose.yml` env-variable "USE_STANDALONE_NO_MQTT" übersprungen werden.
-
-Als Blockchain wird Hyperledger Fabric verwendet, die Kommunikation findet über eine API statt
-    > Dokmentation der API: http://project-kosmos.ml/doc/
-
-Kern ist ein Docker Container mit Node-RED.
-
-Alles läuft in einem Container ab.
-  
-  
 ## Credits
 
 Dieses Repo wurde erstellt im Rahmen des BMBF Forschungsprojektes KOSMoS gefördert durch das https://www.bmbf.de/
