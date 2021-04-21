@@ -1,5 +1,11 @@
 # Changelog Lokale BC Komponente
 
+21.4.2021
+* New: Updated to new BCC_CONFIG definition
+* New: New ENV variable BC_API_PRODDATA for blockchain API endpoint
+* New: Created Makefile for standalone dev and testing
+
+
 07.09.2020 (Initial Commit)
 * New: Basic MQTT listening
 * New: Extract value from payload

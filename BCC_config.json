@@ -1,0 +1,16 @@
+[
+    {
+        "machineId": "9d82699b-373a-4b2a-8925-f7bfacb618a4",
+        "sensorId": "123-my-456-sensor-789-id-000",
+        "mqtt-topic": "kosmos/machine-data/<machineId>/Sensor/<sensorId>/Update",
+        "blockchain-endpoint": "http://blockchain-api/api/machine/<machineId>/prodData",
+        "mapping": "none"
+    },
+    {
+        "machineId": "222-maschinezwei-222",
+        "sensorId": "222-sensoreins-222",
+        "mqtt-topic": "kosmos/machine-data/<machineId>/Sensor/<sensorId>/Update",
+        "blockchain-endpoint": "http://blockchain-api/api/machine/<machineId>/prodData",
+        "mapping": "none"
+    }
+]

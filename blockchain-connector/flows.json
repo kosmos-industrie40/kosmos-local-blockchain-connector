@@ -134,13 +134,12 @@
     {
         "id": "5e822ce4.c7fbdc",
         "type": "mqtt-broker",
-        "z": "",
         "name": "",
         "broker": "${MQTT_BROKER_FQDN}",
-        "port": "8883",
+        "port": "1883",
         "tls": "270c576d.d3692",
         "clientid": "",
-        "usetls": true,
+        "usetls": false,
         "compatmode": false,
         "keepalive": "60",
         "cleansession": true,
@@ -157,7 +156,6 @@
     {
         "id": "3ca18455.f0647c",
         "type": "ui_tab",
-        "z": "",
         "name": "Konfiguration",
         "icon": "dashboard",
         "order": 1,
@@ -167,7 +165,6 @@
     {
         "id": "e5f204d6.08dcf8",
         "type": "ui_group",
-        "z": "",
         "name": "BCC_CONFIG",
         "tab": "3ca18455.f0647c",
         "order": 1,
@@ -178,7 +175,6 @@
     {
         "id": "b1ab5c9a.eff0b8",
         "type": "ui_tab",
-        "z": "",
         "name": "LOG",
         "icon": "dashboard",
         "order": 2,
@@ -188,7 +184,6 @@
     {
         "id": "5e46a468.baa314",
         "type": "ui_group",
-        "z": "",
         "name": "Blockchain Connector Statistik",
         "tab": "4769e867.58654",
         "order": 1,
@@ -199,7 +194,6 @@
     {
         "id": "20dcd6f2.879e02",
         "type": "ui_group",
-        "z": "",
         "name": "Blockchain Response",
         "tab": "b1ab5c9a.eff0b8",
         "order": 2,
@@ -210,7 +204,6 @@
     {
         "id": "270c576d.d3692",
         "type": "tls-config",
-        "z": "",
         "name": "",
         "cert": "/usr/src/node-red/cert.pem",
         "key": "/usr/src/node-red/key.pem",
@@ -224,7 +217,6 @@
     {
         "id": "4769e867.58654",
         "type": "ui_tab",
-        "z": "",
         "name": "Statistik",
         "icon": "dashboard",
         "disabled": false,
@@ -233,7 +225,6 @@
     {
         "id": "6855b0e7.de2ce",
         "type": "ui_tab",
-        "z": "",
         "name": "Test TX",
         "icon": "dashboard",
         "disabled": false,
@@ -242,7 +233,6 @@
     {
         "id": "a6c5ad4b.7ec0d",
         "type": "ui_group",
-        "z": "",
         "d": true,
         "name": "Default",
         "tab": "6855b0e7.de2ce",
@@ -254,7 +244,6 @@
     {
         "id": "9461f408.26705",
         "type": "ui_group",
-        "z": "",
         "name": "Config UI",
         "tab": "fed10b08.18f048",
         "order": 1,
@@ -265,7 +254,6 @@
     {
         "id": "fed10b08.18f048",
         "type": "ui_tab",
-        "z": "",
         "name": "Blockchain Explorer",
         "icon": "dashboard",
         "disabled": false,
@@ -283,7 +271,6 @@
     {
         "id": "d850dcb9.c84a58",
         "type": "ui_group",
-        "z": "",
         "name": "Machine UI",
         "tab": "fed10b08.18f048",
         "order": 3,
@@ -294,7 +281,6 @@
     {
         "id": "64b2323f.aa71c4",
         "type": "ui_group",
-        "z": "",
         "name": "Contracts UI",
         "tab": "fed10b08.18f048",
         "order": 4,
@@ -468,7 +454,7 @@
         "type": "function",
         "z": "70de23d1.e038a4",
         "name": "Evaluate BCC_CONFIG",
-        "func": "var myBccConfig = JSON.parse(env.get(\"BCC_CONFIG\"));\n\nfor (let configuredMqttTopicKey in myBccConfig) {\n let configuredMqttTopic = myBccConfig[configuredMqttTopicKey];\n\n let mqttTopic = configuredMqttTopic[\"mqtt-topic\"];\n\n // Move to next configured MQTT-Topic if this one is not for the current MQTT-Topic\n if (msg.topic !== mqttTopic) continue;\n\n let bcApiEndpointUrl = configuredMqttTopic.blockchain.endpoint;\n\n // Create BC-API Data object\n let bcApiData = {\n customerId: myBccConfig.customerId\n };\n\n for (let dataMappingKey in configuredMqttTopic.blockchain[\"data-mapping\"]) {\n let dataMapping = configuredMqttTopic.blockchain[\"data-mapping\"][dataMappingKey];\n\n // Evaluate data-mappings - TODO: Avoid eval if possible\n let dataEntryColumn = eval(dataMapping.column);\n let dataEntryValue = eval(dataMapping.value);\n\n // Cast/parse data to its column type\n switch (dataEntryColumn.type){\n case \"integer\":\n bcApiData[dataEntryColumn.name] = parseInt(dataEntryValue);\n break;\n default:\n bcApiData[dataEntryColumn.name] = dataEntryValue;\n break;\n }\n \n }\n\n // Send with unique msgid\n node.send({\n topic: mqttTopic,\n msgid: RED.util.generateId(),\n url: bcApiEndpointUrl,\n payload: bcApiData\n });\n}",
+        "func": "var myBccConfig = global.get(\"BCC_CONFIG\")||false;\n\nif (!myBccConfig) {\n    node.warn(\"error: BCC_CONFIG missing\");\n    node.status({fill:\"red\",shape:\"ring\",text:\"BCC_CONFIG missing\"});\n    return;\n}\n\n// Get config set from configuration\nvar confSet = myBccConfig.find(element => element[\"mqtt-topic\"] == [msg.topic]);\n\n// If topic is not configured => stop\nif (!confSet) {\n    node.warn(\"info: ignore topic [\"+msg.topic+\"]\");\n    return;\n}\n\n// Perform specified mapping\nvar mapping = confSet[\"mapping\"] || false;\nswitch (mapping) {\n    case \"none\":\n        break;\n    default:\n        node.warn(\"warning: Mapping not implemented yet\");\n}\n\n// Proceed with with a unique msgid\nmsg.msgid = RED.util.generateId();\nmsg.url = env.get(\"BC_API_PRODDATA\");\n/*\nnode.send({\n    topic: msg.topic,\n    msgid: RED.util.generateId(),\n    //url: \"164.90.233.34:3001/storage/prodData\",\n    url: env.get(\"BC_API_PRODDATA\"),\n    payload: msg.payload\n});\n*/\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -479,7 +465,8 @@
             [
                 "3fd9414c.183f7e",
                 "361df1ea.a0060e",
-                "8d9fefba.bd641"
+                "8d9fefba.bd641",
+                "476622b9.de1044"
             ]
         ]
     },
@@ -493,8 +480,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 590,
-        "y": 280,
+        "x": 810,
+        "y": 360,
         "wires": [
             [
                 "476622b9.de1044"
@@ -605,7 +592,7 @@
         "id": "8d9fefba.bd641",
         "type": "http request",
         "z": "70de23d1.e038a4",
-        "name": "BC-API-TRANSACT",
+        "name": "BC-API-Request",
         "method": "POST",
         "ret": "txt",
         "paytoqs": "body",
@@ -619,7 +606,8 @@
         "wires": [
             [
                 "a7d9c94c.efdd18",
-                "fd0b9758.f140d8"
+                "fd0b9758.f140d8",
+                "6f74bdb.e047244"
             ]
         ]
     },
@@ -902,23 +890,6 @@
         "wires": []
     },
     {
-        "id": "1f89659b.3a78e2",
-        "type": "link in",
-        "z": "70de23d1.e038a4",
-        "name": "INJECTMQTT",
-        "links": [
-            "20dcbfbd.fa604",
-            "43851f19.412118"
-        ],
-        "x": 375,
-        "y": 40,
-        "wires": [
-            [
-                "59579a0e.8a9554"
-            ]
-        ]
-    },
-    {
         "id": "661d980f.58007",
         "type": "function",
         "z": "cd25a1d0.3ef9c8",
@@ -962,7 +933,7 @@
         "links": [
             "4dda966b.20c8a8"
         ],
-        "x": 435,
+        "x": 475,
         "y": 140,
         "wires": []
     },
@@ -980,8 +951,8 @@
         "fwdInMessages": true,
         "resendOnRefresh": true,
         "templateScope": "local",
-        "x": 870,
-        "y": 280,
+        "x": 1150,
+        "y": 340,
         "wires": [
             []
         ]
@@ -994,10 +965,6 @@
         "props": [
             {
                 "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
             }
         ],
         "repeat": "",
@@ -1011,7 +978,8 @@
         "y": 160,
         "wires": [
             [
-                "d4b90124.c298e8"
+                "d4b90124.c298e8",
+                "b6296ec9.6024a8"
             ]
         ]
     },
@@ -1099,7 +1067,8 @@
         "y": 200,
         "wires": [
             [
-                "3fd9414c.183f7e"
+                "3fd9414c.183f7e",
+                "476622b9.de1044"
             ]
         ]
     },
@@ -1121,6 +1090,7 @@
         "payload": "",
         "payloadType": "str",
         "topic": "",
+        "topicType": "str",
         "x": 140,
         "y": 80,
         "wires": [
@@ -1144,6 +1114,7 @@
         "mode": "text",
         "delay": 300,
         "topic": "CustomerId",
+        "topicType": "str",
         "x": 160,
         "y": 40,
         "wires": [
@@ -1245,6 +1216,7 @@
         "payload": "",
         "payloadType": "str",
         "topic": "",
+        "topicType": "str",
         "x": 120,
         "y": 280,
         "wires": [
@@ -1878,5 +1850,123 @@
                 "cab6d232.317b7"
             ]
         ]
+    },
+    {
+        "id": "b6296ec9.6024a8",
+        "type": "function",
+        "z": "f7247905.828f38",
+        "name": "Store as GLOBAL",
+        "func": "var myBccConfig = JSON.parse(msg.payload);\n//var newBccConfig = [];\nmyBccConfig.forEach(function(confSet) {\n    var machineId = confSet[\"machineId\"];\n    //node.warn(\"machineId=\"+machineId);\n    if (machineId) {\n        confSet[\"mqtt-topic\"] = confSet[\"mqtt-topic\"].replace(\"<machineId>\",machineId);\n        confSet[\"blockchain-endpoint\"] = confSet[\"blockchain-endpoint\"].replace(\"<machineId>\",machineId);\n    } else {\n        node.warn(\"Warning in BCC_CONFIG: missing machineId\");\n    }\n    var sensorId = confSet[\"sensorId\"];\n    if (sensorId) {\n        confSet[\"mqtt-topic\"] = confSet[\"mqtt-topic\"].replace(\"<sensorId>\",sensorId);\n        confSet[\"blockchain-endpoint\"] = confSet[\"blockchain-endpoint\"].replace(\"<sensorId>\",sensorId);\n    } else {\n        node.warn(\"Warning in BCC_CONFIG: missing sensorId\");\n    }\n    /*\n    node.warn(\"new topic=\"+confSet[\"mqtt-topic\"]);\n    newBccConfig.push({ [confSet[\"mqtt-topic\"]]: {\n        \"blockchain-endpoint\": confSet[\"blockchain-endpoint\"],\n        \"mapping\": confSet[\"mapping\"]\n    }});\n    */\n});\nglobal.set(\"BCC_CONFIG\",myBccConfig);\n//global.set(\"BCC_CONFIG\",newBccConfig);\n",
+        "outputs": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 710,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "85a941ab.f6c788",
+        "type": "inject",
+        "z": "70de23d1.e038a4",
+        "name": "Test-Mqtt",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "kosmos/machine-data/9d82699b-373a-4b2a-8925-f7bfacb618a4/Sensor/123-my-456-sensor-789-id-000/Update",
+        "payload": "{\"prodMinutes\":0,\"prodPieces\":0,\"toolChanges\":0,\"travelDistance\":0,\"directionChange\":0,\"materialType\":\"aluminum\"}",
+        "payloadType": "json",
+        "x": 130,
+        "y": 300,
+        "wires": [
+            [
+                "59579a0e.8a9554"
+            ]
+        ]
+    },
+    {
+        "id": "b24ed14e.e03b2",
+        "type": "function",
+        "z": "70de23d1.e038a4",
+        "name": "Evaluate BCC_CONFIG alt",
+        "func": "//var myBccConfig = JSON.parse(env.get(\"BCC_CONFIG\"));\nvar myBccConfig = global.get(\"BCC_CONFIG\");\nnode.warn(myBccConfig);\n\n//for (let configuredMqttTopicKey in myBccConfig) {\n// let configuredMqttTopic = myBccConfig[configuredMqttTopicKey];\n\n// let mqttTopic = configuredMqttTopic[\"mqtt-topic\"];\n\n // Move to next configured MQTT-Topic if this one is not for the current MQTT-Topic\n //if (msg.topic !== mqttTopic) continue;\n \n //let rMsg = msg.payload.body\n \n /*\n let rMsg = {\n\t\t\"timestamp\": \"2021-02-01T12:00:00Z\",\n\t\t\"machineID\": \"a61fab33-5744-437d-bfab-87319f1e411a\",\n\t\t\"columns\": [\n\t\t\t{\n\t\t\t\t\"name\": \"crash\",\n\t\t\t\t\"type\": \"boolean\",\n\t\t\t\t\"meta\": {\n\t\t\t\t\t\"unit\": \"\",\n\t\t\t\t\t\"description\": \"defines if the machine is crashed or not\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"name\": \"prodMinutes\",\n\t\t\t\t\"type\": \"number\",\n\t\t\t\t\"meta\": {\n\t\t\t\t\t\"unit\": \"minutes\",\n\t\t\t\t\t\"description\": \"are the production minutes\"\n\t\t\t\t}\n\t\t\t},\t\t\t\n\t\t\t{\n\t\t\t\t\"name\": \"prodPieces\",\n\t\t\t\t\"type\": \"number\",\n\t\t\t\t\"meta\": {\n\t\t\t\t\t\"unit\": \"minutes\",\n\t\t\t\t\t\"description\": \"are the production minutes\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"name\": \"toolChanges\",\n\t\t\t\t\"type\": \"number\",\n\t\t\t\t\"meta\": {\n\t\t\t\t\t\"unit\": \"\",\n\t\t\t\t\t\"description\": \"is the counter of tool changes in the machine\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"name\": \"travelDistance\",\n\t\t\t\t\"type\": \"number\",\n\t\t\t\t\"meta\": {\n\t\t\t\t\t\"unit\": \"\",\n\t\t\t\t\t\"description\": \"is the counter of tool changes in the machine\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"name\": \"directionChange\",\n\t\t\t\t\"type\": \"number\",\n\t\t\t\t\"meta\": {\n\t\t\t\t\t\"unit\": \"\",\n\t\t\t\t\t\"description\": \"is the counter of direction changes\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"name\": \"materialType\",\n\t\t\t\t\"type\": \"string\",\n\t\t\t\t\"meta\": {\n\t\t\t\t\t\"unit\": \"\",\n\t\t\t\t\t\"description\": \"defines the matrial type\"\n\t\t\t\t}\n\t\t\t}\n\t\t],\n\t\t\"data\": [\n\t\t\t[\"true\"],\n\t\t\t[\"110\"],\n\t\t\t[\"110\"],\n\t\t\t[\"110\"],\n\t\t\t[\"100000\"],\n\t\t\t[\"55\"],\n\t\t\t[\"aluminum\"]\n\t\t]\n\t} */\n \n console.log(rMsg)\n\n // Create BC-API Data object\n //let bcApiData = {\n //    customerId: myBccConfig.customerId\n //};\n\n // Send with unique msgid\n node.send({\n    topic: \"kosmos/machine-data/abc/Sensor/abc/Update\",\n    msgid: RED.util.generateId(),\n    url: \"164.90.233.34:3001/storage/prodData\",\n //payload: rMsg\n    payload: msg.payload\n });",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 360,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a5cce628.947ee",
+        "type": "inject",
+        "z": "f7247905.828f38",
+        "name": "Test-BCC_CONFIG",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[{\"machineId\":\"9d82699b-373a-4b2a-8925-f7bfacb618a4\",\"sensorId\":\"123-my-456-sensor-789-id-000\",\"mqtt-topic\":\"kosmos/machine-data/<machineId>/Sensor/<sensorId>/Update\",\"blockchain-endpoint\":\"http://blockchain-api/api/machine/<machineId>/prodData\",\"mapping\":\"none\"},{\"machineId\":\"222-maschinezwei-222\",\"sensorId\":\"222-sensoreins-222\",\"mqtt-topic\":\"kosmos/machine-data/<machineId>/Sensor/<sensorId>/Update\",\"blockchain-endpoint\":\"http://blockchain-api/api/machine/<machineId>/prodData\",\"mapping\":\"none\"},{\"machineId\":\"333-maschinezwei-333\",\"sensorId\":\"333-sensorzwei-333\",\"mqtt-topic\":\"kosmos/machine-data/<machineId>/Sensor/<sensorId>/Update\",\"blockchain-endpoint\":\"http://blockchain-api/api/machine/<machineId>/prodData\",\"mapping\":\"mapXYZ\"}]",
+        "payloadType": "json",
+        "x": 270,
+        "y": 260,
+        "wires": [
+            [
+                "c2d53300.3be4d8"
+            ]
+        ]
+    },
+    {
+        "id": "c2d53300.3be4d8",
+        "type": "function",
+        "z": "f7247905.828f38",
+        "name": "DeJSONify",
+        "func": "msg.payload = JSON.stringify(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 470,
+        "y": 240,
+        "wires": [
+            [
+                "b6296ec9.6024a8"
+            ]
+        ]
+    },
+    {
+        "id": "6f74bdb.e047244",
+        "type": "debug",
+        "z": "70de23d1.e038a4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 120,
+        "wires": []
     }
 ]
