@@ -1,5 +1,10 @@
 # Changelog Lokale BC Komponente
 
+todo:
+* test with valid bc-endpoint
+* docs about new BCC_CONFIG.json
+* make mqtt-security optional
+
 21.4.2021
 * New: Updated to new BCC_CONFIG definition
 * New: New ENV variable BC_API_PRODDATA for blockchain API endpoint
