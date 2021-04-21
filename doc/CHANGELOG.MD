@@ -4,6 +4,7 @@
 * New: Updated to new BCC_CONFIG definition
 * New: New ENV variable BC_API_PRODDATA for blockchain API endpoint
 * New: Created Makefile for standalone dev and testing
+* New: password protection for flow editor
 
 
 07.09.2020 (Initial Commit)

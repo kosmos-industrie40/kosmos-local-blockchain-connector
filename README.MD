@@ -19,6 +19,7 @@ Der LKK-BCC stellt eine Schnittstelle zwischen den lokalen KOSMoS Komponenten un
 Wenn die LKK-BCC ohne KOSMOS-MQTT gestartet werden soll (z.B. zu Testzwecken), muss im CONFIG.env die Variable `USE_STANDALONE_NO_MQTT` auf `true` gesetzt werden.
   
 
+
 ## Konfiguration
 
 Der Container ist stateless und wird über Umgebungsvariablen beim Start konfiguriert.
@@ -37,17 +38,19 @@ Konfiguration, welche MQTT-Nachrichten an welchen Blockchain API-Endpunkt überg
 [Detailiertere Beschreibung MQTT-Payload](./doc/BCC_PAYLOAD.MD) 
   
   
-## Installation und Start aller Services
+## Startup
 
-Der Start der Komponenten erfolgt über ein Start-Script,
-welches als Referenz für die Komponenten verwendet werden kann.
+    $ make build
+    $ make up
 
-```bash
-git clone https://github.com/kosmos-industrie40/kosmos-local-startup.git
-cd kosmos-local-startup
-./start_all.sh
-```
+The Node-RED Editor can be reached at http://...
+
+To lo in the editor use `admin/kosmos` as credentials.
+
+To stop the blockchain connector, use
   
+    $ make down
+
 
 ## Funktionsweise
 

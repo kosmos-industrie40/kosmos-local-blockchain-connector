@@ -4,6 +4,7 @@ RUN npm install node-red-dashboard
 COPY ./blockchain-connector/flows.json /app/flows.json
 COPY ./common /app/common
 COPY ./blockchain-connector/entrypoint.sh /usr/src/node-red/entrypoint.sh
+COPY ./blockchain-connector/settings.js /app/settings.js
 
 USER root
 
