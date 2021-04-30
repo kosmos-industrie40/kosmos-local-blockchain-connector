@@ -8,7 +8,7 @@ Der LKK-BCC stellt eine Schnittstelle zwischen den lokalen KOSMoS Komponenten un
 [Todo Liste](./doc/TODO.MD)  
   
 
-## Voraussetzungen zur Installation/Nutzung
+## Voraussetzungen
 
 * Linux (getestet unter Ubuntu 18.04.4 LTS und Arch rolling)
 * Docker (`apt install docker-ce` bzw. `pacman -S docker`)
@@ -18,64 +18,116 @@ Der LKK-BCC stellt eine Schnittstelle zwischen den lokalen KOSMoS Komponenten un
 
 Wenn die LKK-BCC ohne KOSMOS-MQTT gestartet werden soll (z.B. zu Testzwecken), muss im CONFIG.env die Variable `USE_STANDALONE_NO_MQTT` auf `true` gesetzt werden.
   
+## Installation
+
+### Test
+
+Das `docker-compose-test.yml` wird für die test-Version benutzt.
+
+Zum Test kann ein Standalone-Blockchain-Connector gestartet werden:
+
+    $ make build 
+    $ make up
+
+Zu stoppen genügt ein
+    $ make down
+
+### Produktion
+
+Die Produktionsversion wird mit Docker gestartet:
+
+    $ docker run \
+        -d \
+        --net kosmos-local \
+        --domainname=${KOSMOS_LOCAL_MQTT_CLIENT_ROLE_FQDN} \
+        --hostname=bockchain-connector \
+        --name blockchain-connector \
+        -e TZ=Europe/Berlin \
+        -e VAULT_TOKEN=${VAULT_TOKEN} \
+        -e USE_TLS=true \
+        -e USE_STANDALONE_NO_MQTT=false \
+        -e BC_API_PRODDATA: "http://35.159.41.125/storage/prodData" \
+        -e BC_API_MACHINES: "http://35.159.41.125/machine" \
+        -e BC_API_CONTRACTS: "http://35.159.41.125/contract" \
+        -e BCC_CONFIG: "[{ \
+                "machineId": "14ca47df-3872-4d05-b6fe-dabb2dcb92ea", \
+                "sensorId": "sensor1inmachine1", \
+                "mqtt-topic": "kosmos/machine-data/<machineId>/Sensor/<sensorId>/Update", \
+                "blockchain-endpoint": "<BC_API_PRODDATA>", \
+                "mapping": "none" \
+            }]"
+        -e MY_PKI_URI=https://${KOSMOS_LOCAL_MQTT_CA_FQDN}:8201/v1/${KOSMOS_LOCAL_MQTT_PKI_PATH}/issue/${KOSMOS_LOCAL_MQTT_CLIENT_ROLE_PATH} \
+        -e MQTT_BROKER_FQDN=${KOSMOS_LOCAL_MQTT_BROKER_HOSTNAME}.${KOSMOS_LOCAL_MQTT_BROKER_ROLE_FQDN} \
+        -p 10005:1880 \
+        harbor.kosmos.idcp.inovex.io/ondics/blockchain-connector:0.3.0 \
+            > /dev/null && echo " [OK]"
+
+### Oberfläche
+
+Wenn der Container gestartet ist
+The Node-RED Editor can be reached at http://...
+
+Anmeldung im Node-RED Editor mit `admin/kosmos`
+
+Das Node-RED-Dashboard ist erreichbar unter http://.../ui
+
+Der Status kann (im Container) mit 
+
+    curl localhost:1880/health | jq
+
+abgefragt werden.
 
 
 ## Konfiguration
 
 Der Container ist stateless und wird über Umgebungsvariablen beim Start konfiguriert.
 
-### Allgemeine Konfigurations Variablen
+### Docker-Env Variablen
 
-TODO
+* BC_API_PRODDATA: Blockchain-API-Endpunkt für Proktionsdaten-Updates
+* BC_API_MACHINES: Blockchain-API-Endpunkt für Abfrage aller Maschinen eines Kunden
+* BC_API_CONTRACTS: Blockchain-API-Endpunkt für Abfrage aller verträge eines Kunden
+* BCC_CONFIG: Topics von MQTT-Messages, deren Payloads an die Blockchain übertragen werden sollen
 
-### BCC_CONFIG
+### Aufbau BCC_CONFIG
 
-Konfiguration, welche MQTT-Nachrichten an welchen Blockchain API-Endpunkt übergeben werden sollen und wie diese Daten umstrukturiert werden.  
-[Detailiertere Beschreibung BCC Config](./doc/BCC_CONFIG.MD)
+Ein JSON-Array mit Einträgen für Mqtt-Topics. Jeder Eintrag besteht aus:
 
-### MQTT-Payload
+* `mqtt-topic`: Mqtt-Topic, das übertragen werden soll (mit Platzhaltern `<...>`)
+* `machineId`: Wert für den Platzhalter `<maschineId>`
+* `sensorId`: Wert für den Platzhalter `<sensorId>`
+* `blockchain-endpoint`: Url der Blockchain-API. `<BC_API_PRODDATA>` wird durch die env-Variable ersetzt
 
-[Detailiertere Beschreibung MQTT-Payload](./doc/BCC_PAYLOAD.MD) 
-  
-  
-## Startup
+Beispiel:
 
-    $ make build
-    $ make up
+    [
+        {
+            "machineId": "14ca47df-3872-4d05-b6fe-dabb2dcb92ea",
+            "sensorId": "sensor1inmachine1",
+            "mqtt-topic": "kosmos/machine-data/<machineId>/Sensor/<sensorId>/Update",
+            "blockchain-endpoint": "<BC_API_PRODDATA>",
+            "mapping": "none"
+        }
+    ]
 
-The Node-RED Editor can be reached at http://...
 
-To lo in the editor use `admin/kosmos` as credentials.
 
-To stop the blockchain connector, use
-  
-    $ make down
 
 
 ## Funktionsweise
 
 Die LKK-BCC macht folgendes:
+
 * MQTT-Nachrichten entgegennehmen
-* Konfigurierte MQTT-Nachrichten:
-    * Formatieren
-    * Die Blockchain-HTTPS-API übergeben
+* Prüfen, ob eine MQTT-Nachricht an die Blockchain übertragen werden muss.
+* Senden der Nachricht an die Blockchain-API
 
 Als Blockchain wird Hyperledger Fabric verwendet, die Kommunikation findet über eine HTTP-API statt
 
-> Dokmentation der API: http://kosmos-2017317103.eu-central-1.elb.amazonaws.com/api/docs/
+> Dokmentation der API: http://35.159.41.125/docs
   
   
 ### Dashboard
-
-~~In der Web-Oberfläche können zu Testzwecken MQTT-Nachrichten auch simuliert werden und und manuell an die Blockchain übertragen werden.~~
-
-~~Das simulierte Test-Topic lautet: `kosmos/machine-data/45678/Sensor/1234/Update`~~
-
-~~Es wird von beiden Regeln im JSON gematched und darauf hin werden 2 Blockchain-Transaktionen durchgeführt.~~
-
-~~Achtung: Die Transaktionen übertragen jeweils andere Werte. Das könnten zwei verschiedene Sensorwerte sein. Da nur eine Blockchain-Funktion zur Verfügung steht, wird eben zwei Mal `UpdateTemperature` aufgerufen.~~
-
-Hierfür gibt es nun die [Lokale KOSMoS Komponente "Machine Simulator"](https://github.com/kosmos-industrie40/kosmos-local-machine-simulator).
 
 Das Dashboard bietet:
 * Text-Ansicht der BCC_CONFIG Variable
@@ -94,4 +146,4 @@ Verwendete Software und Technologien:
 
 ## Author
 
-(C) 2020 Ondics GmbH
+(C) 2021 Ondics GmbH

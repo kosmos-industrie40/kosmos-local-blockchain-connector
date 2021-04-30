@@ -7,10 +7,10 @@ if [ "$USE_TLS" = true ] && [ "$USE_STANDALONE_NO_MQTT" = false ]; then
     . /app/common/request_cert.sh
 fi
 
-if [ -f /tmp/BCC_config.json ]; then
-    echo "TEST: BCC_CONFIG is filled with  /tmp/BCC_CONFIG.json"
-    export BCC_CONFIG="$(cat /tmp/BCC_config.json)"
-fi
+# if [ -f /tmp/BCC_config.json ]; then
+#     echo "TEST: BCC_CONFIG is filled with  /tmp/BCC_CONFIG.json"
+#     export BCC_CONFIG="$(cat /tmp/BCC_config.json)"
+# fi
 
 echo "--- environment:"
 printenv

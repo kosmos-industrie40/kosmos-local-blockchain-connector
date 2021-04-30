@@ -2,9 +2,9 @@
     {
         "id": "f7247905.828f38",
         "type": "tab",
-        "label": "Konfiguration (Dashboard)",
+        "label": "Konfiguration",
         "disabled": false,
-        "info": ""
+        "info": "#  Konfiguration des BCC\n \n Die env-Variable BCC_CONFIG enthält die\n MQTT-Topics, die an die Blockchain-API\n übertragen werden müssen.\n \n Die anderen MQTT-Topics werden ignoriert.\n \n Es kann eine Test-BCC_CONFIG manuell\n ausgelöst werden (Inject-Node)."
     },
     {
         "id": "70de23d1.e038a4",
@@ -454,12 +454,12 @@
         "type": "function",
         "z": "70de23d1.e038a4",
         "name": "Evaluate BCC_CONFIG",
-        "func": "var myBccConfig = global.get(\"BCC_CONFIG\")||false;\n\nif (!myBccConfig) {\n    node.warn(\"error: BCC_CONFIG missing\");\n    node.status({fill:\"red\",shape:\"ring\",text:\"BCC_CONFIG missing\"});\n    return;\n}\n\n// Get config set from configuration\nvar confSet = myBccConfig.find(element => element[\"mqtt-topic\"] == [msg.topic]);\n\n// If topic is not configured => stop\nif (!confSet) {\n    node.warn(\"info: ignore topic [\"+msg.topic+\"]\");\n    return;\n}\n\n// Perform specified mapping\nvar mapping = confSet[\"mapping\"] || false;\nswitch (mapping) {\n    case \"none\":\n        break;\n    default:\n        node.warn(\"warning: Mapping not implemented yet\");\n}\n\n// Proceed with with a unique msgid\nmsg.msgid = RED.util.generateId();\nmsg.url = env.get(\"BC_API_PRODDATA\");\n/*\nnode.send({\n    topic: msg.topic,\n    msgid: RED.util.generateId(),\n    //url: \"164.90.233.34:3001/storage/prodData\",\n    url: env.get(\"BC_API_PRODDATA\"),\n    payload: msg.payload\n});\n*/\nreturn msg;",
+        "func": "/*\n * Prüfen, ob das eingehende Topic an die\n * Blockchain übertragen werden soll\n * Wenn nein => Flow stoppen\n * Wenn ja => Flow fortsetzen\n */\n\nvar myBccConfig = global.get(\"BCC_CONFIG\")||false;\n\nif (!myBccConfig) {\n    node.warn(\"error: BCC_CONFIG missing\");\n    node.status({fill:\"red\",shape:\"ring\",text:\"BCC_CONFIG missing\"});\n    return;\n}\n\n// Get config set from configuration\nvar confSet = myBccConfig.find(element => element[\"mqtt-topic\"] == [msg.topic]);\n\n// If topic is not configured => stop\nif (!confSet) {\n    node.warn(\"info: ignore topic [\"+msg.topic+\"]\");\n    return;\n}\n\n// Perform specified mapping\nvar mapping = confSet[\"mapping\"] || false;\nswitch (mapping) {\n    case \"none\":\n        break;\n    default:\n        node.warn(\"warning: Mapping not implemented yet\");\n}\n\n// Proceed with with a unique msgid\nmsg.msgid = RED.util.generateId();\nmsg.url = env.get(\"BC_API_PRODDATA\");\n/*\nnode.send({\n    topic: msg.topic,\n    msgid: RED.util.generateId(),\n    //url: \"164.90.233.34:3001/storage/prodData\",\n    url: env.get(\"BC_API_PRODDATA\"),\n    payload: msg.payload\n});\n*/\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 290,
+        "x": 430,
         "y": 200,
         "wires": [
             [
@@ -474,14 +474,14 @@
         "id": "3fd9414c.183f7e",
         "type": "function",
         "z": "70de23d1.e038a4",
-        "name": "Buffer last 20 requests and responses",
+        "name": "Buffer last 20 requests",
         "func": "var buffer = context.get(\"buffer\") || [];\n\nfunction isRequest() {\n    return !msg.hasOwnProperty(\"headers\");\n}\n\nfunction changeResonseBuffer() {\n    for (let entryNum in buffer) {\n        // Finds our message in the buffer\n        if (buffer[entryNum].id == msg.msgid) {\n            let currentDate = new Date();\n            let latency = currentDate - buffer[entryNum].requestDate;\n            buffer[entryNum].date = currentDate.toLocaleString() + \" (\" + latency + \"ms)\";\n            buffer[entryNum].resonse = msg.statusMessage;\n            break;\n        }\n    }\n}\n\nif (isRequest()) {\n    var entry = {};\n\n    entry.id = msg.msgid;\n    entry.requestDate = new Date();\n    entry.date = entry.requestDate.toLocaleString();\n    entry.topic = msg.topic;\n    entry.value = msg.payload;\n    entry.resonse = \"Requesting...\";\n    entry.url = msg.url;\n\n    buffer.push(entry);\n} else {\n    changeResonseBuffer();\n}\n\n// Only the keep 20 entries in buffer\nbuffer = buffer.slice(-20);\ncontext.set(\"buffer\", buffer);\n\nreturn {\n    payload: buffer\n};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 810,
-        "y": 360,
+        "x": 720,
+        "y": 280,
         "wires": [
             [
                 "476622b9.de1044"
@@ -500,8 +500,8 @@
         "label": "Übertragene API-Aufrufe",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 890,
-        "y": 380,
+        "x": 610,
+        "y": 360,
         "wires": []
     },
     {
@@ -516,8 +516,8 @@
         "label": "Übertragungsfehler",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 870,
-        "y": 440,
+        "x": 590,
+        "y": 400,
         "wires": []
     },
     {
@@ -538,8 +538,8 @@
         "payload": "",
         "payloadType": "str",
         "topic": "",
-        "x": 1130,
-        "y": 120,
+        "x": 870,
+        "y": 60,
         "wires": [
             []
         ]
@@ -562,8 +562,8 @@
         "payload": "",
         "payloadType": "str",
         "topic": "",
-        "x": 1120,
-        "y": 220,
+        "x": 880,
+        "y": 100,
         "wires": [
             [
                 "7a7d3e4f.376958"
@@ -575,13 +575,13 @@
         "type": "function",
         "z": "d9594b8f.641b7",
         "name": "Rot -> grün - nur durch Button ",
-        "func": "if (msg.payload == \"ba32a7f3.30c248\"){\n // Button wurde gedrückt\n msg.payload = \"\";\n msg.background = \"green\"\n return msg;\n} else if (msg.background === \"red\"){\n msg.payload = \"Zurücksetzen\";\n return msg;\n}\n\n",
+        "func": "if (msg.payload == \"ba32a7f3.30c248\"){\n    // Button wurde gedrückt\n    msg.payload = \"\";\n    msg.background = \"green\"\n} else if (msg.background === \"red\"){\n    msg.payload = \"Zurücksetzen\";\n}\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 890,
-        "y": 220,
+        "x": 630,
+        "y": 160,
         "wires": [
             [
                 "ba32a7f3.30c248"
@@ -601,13 +601,14 @@
         "persist": false,
         "proxy": "",
         "authType": "",
-        "x": 560,
-        "y": 200,
+        "x": 680,
+        "y": 120,
         "wires": [
             [
                 "a7d9c94c.efdd18",
                 "fd0b9758.f140d8",
-                "6f74bdb.e047244"
+                "6f74bdb.e047244",
+                "c9dc3955.d64138"
             ]
         ]
     },
@@ -615,12 +616,12 @@
         "id": "4dda966b.20c8a8",
         "type": "link in",
         "z": "d9594b8f.641b7",
-        "name": "HTTP STATUSCODE",
+        "name": "Http Ergebnis BC_API_Request",
         "links": [
-            "a7d9c94c.efdd18",
-            "361df1ea.a0060e"
+            "361df1ea.a0060e",
+            "a7d9c94c.efdd18"
         ],
-        "x": 315,
+        "x": 135,
         "y": 180,
         "wires": [
             [
@@ -636,8 +637,8 @@
         "links": [
             "4dda966b.20c8a8"
         ],
-        "x": 695,
-        "y": 140,
+        "x": 815,
+        "y": 80,
         "wires": []
     },
     {
@@ -650,12 +651,13 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 500,
+        "x": 300,
         "y": 180,
         "wires": [
             [
                 "7a7d3e4f.376958",
-                "4da2815e.774d5"
+                "4da2815e.774d5",
+                "df22d789.2a6d4"
             ],
             [
                 "ee33592.7b74da8"
@@ -680,8 +682,8 @@
         "label": "",
         "format": "Live-Status<br>(aktuelle BC-Transaktion)",
         "layout": "row-right",
-        "x": 1030,
-        "y": 80,
+        "x": 930,
+        "y": 260,
         "wires": []
     },
     {
@@ -696,8 +698,8 @@
         "label": "",
         "format": " All-Time Status",
         "layout": "row-right",
-        "x": 1120,
-        "y": 180,
+        "x": 940,
+        "y": 300,
         "wires": []
     },
     {
@@ -933,8 +935,8 @@
         "links": [
             "4dda966b.20c8a8"
         ],
-        "x": 475,
-        "y": 140,
+        "x": 615,
+        "y": 80,
         "wires": []
     },
     {
@@ -951,8 +953,8 @@
         "fwdInMessages": true,
         "resendOnRefresh": true,
         "templateScope": "local",
-        "x": 1150,
-        "y": 340,
+        "x": 970,
+        "y": 280,
         "wires": [
             []
         ]
@@ -961,7 +963,7 @@
         "id": "d8b2f933.9ec538",
         "type": "inject",
         "z": "f7247905.828f38",
-        "name": "",
+        "name": "read BCC_CONFIG",
         "props": [
             {
                 "p": "payload"
@@ -974,11 +976,10 @@
         "topic": "",
         "payload": "BCC_CONFIG",
         "payloadType": "env",
-        "x": 330,
-        "y": 160,
+        "x": 220,
+        "y": 200,
         "wires": [
             [
-                "d4b90124.c298e8",
                 "b6296ec9.6024a8"
             ]
         ]
@@ -988,7 +989,7 @@
         "type": "ui_template",
         "z": "f7247905.828f38",
         "group": "e5f204d6.08dcf8",
-        "name": "Display JSON String",
+        "name": "Display JSON",
         "order": 1,
         "width": 30,
         "height": 15,
@@ -997,8 +998,8 @@
         "fwdInMessages": true,
         "resendOnRefresh": true,
         "templateScope": "local",
-        "x": 840,
-        "y": 160,
+        "x": 660,
+        "y": 400,
         "wires": [
             []
         ]
@@ -1007,51 +1008,19 @@
         "id": "d4b90124.c298e8",
         "type": "function",
         "z": "f7247905.828f38",
-        "name": "PrettyPrint JSON String",
-        "func": "// Generates PrettyPrinted JSON from msg.payload\n\nmsg.payload = JSON.parse(msg.payload);\nmsg.payload = JSON.stringify(msg.payload, undefined, 4); \nreturn msg;",
+        "name": "PrettyPrint JSON",
+        "func": "// Generates PrettyPrinted JSON from msg.payload\n\n//msg.payload = JSON.parse(msg.payload);\nmsg.payload = JSON.stringify(msg.payload, undefined, 4); \nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 570,
-        "y": 160,
+        "x": 450,
+        "y": 400,
         "wires": [
             [
                 "12bb9cca.201d8b"
             ]
         ]
-    },
-    {
-        "id": "b9f93be.045c1c8",
-        "type": "catch",
-        "z": "70de23d1.e038a4",
-        "name": "",
-        "scope": null,
-        "uncaught": true,
-        "x": 380,
-        "y": 400,
-        "wires": [
-            [
-                "7d2fea18.c2abd4"
-            ]
-        ]
-    },
-    {
-        "id": "7d2fea18.c2abd4",
-        "type": "debug",
-        "z": "70de23d1.e038a4",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": true,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 630,
-        "y": 400,
-        "wires": []
     },
     {
         "id": "fd0b9758.f140d8",
@@ -1063,8 +1032,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 810,
-        "y": 200,
+        "x": 910,
+        "y": 180,
         "wires": [
             [
                 "3fd9414c.183f7e",
@@ -1128,7 +1097,7 @@
         "type": "function",
         "z": "c70ed392.30d548",
         "name": "Generate Request",
-        "func": "let customerId = flow.get(\"CustomerId\") || \"asdasd\";\n\nreturn {\n headers: {\n \"Content-Type\": \"application/json\" \n },\n payload: { \n \"customerId\": customerId\n } \n};",
+        "func": "let customerId = flow.get(\"CustomerId\") || \"asdasd\";\n\nreturn {\n    url: env.get(\"BC_API_MACHINES\"),\n    headers: {\n        \"Content-Type\": \"application/json\" \n    },\n    payload: { \n        \"customerId\": customerId\n    } \n};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1169,7 +1138,7 @@
         "method": "GET",
         "ret": "obj",
         "paytoqs": "body",
-        "url": "http://kosmos-2017317103.eu-central-1.elb.amazonaws.com/api/machine",
+        "url": "",
         "tls": "",
         "persist": false,
         "proxy": "",
@@ -1230,7 +1199,7 @@
         "type": "function",
         "z": "c70ed392.30d548",
         "name": "Generate Request",
-        "func": "let customerId = flow.get(\"CustomerId\") || \"asdasd\";\n\nreturn {\n headers: {\n \"Content-Type\": \"application/json\" \n },\n payload: { \n \"customerId\": customerId\n } \n};",
+        "func": "let customerId = flow.get(\"CustomerId\") || \"asdasd\";\n\nreturn {\n    url: env.get(\"BC_API_CONTRACTS\"),\n    headers: {\n        \"Content-Type\": \"application/json\" \n    },\n    payload: { \n        \"customerId\": customerId\n    } \n};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1271,7 +1240,7 @@
         "method": "GET",
         "ret": "obj",
         "paytoqs": "body",
-        "url": "http://kosmos-2017317103.eu-central-1.elb.amazonaws.com/api/contract",
+        "url": "",
         "tls": "",
         "persist": false,
         "proxy": "",
@@ -1521,7 +1490,7 @@
         "label": "Gesamte Nachrichten",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 880,
+        "x": 600,
         "y": 320,
         "wires": []
     },
@@ -1533,17 +1502,18 @@
         "method": "GET",
         "ret": "txt",
         "paytoqs": "body",
-        "url": "http://kosmos-2017317103.eu-central-1.elb.amazonaws.com/health",
+        "url": "",
         "tls": "",
         "persist": false,
         "proxy": "",
         "authType": "",
-        "x": 850,
+        "x": 550,
         "y": 580,
         "wires": [
             [
                 "53477e1d.f4f94",
-                "5a63d982.2e1368"
+                "5a63d982.2e1368",
+                "360e0806.471468"
             ]
         ]
     },
@@ -1559,7 +1529,7 @@
         "label": "Health",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1110,
+        "x": 750,
         "y": 540,
         "wires": []
     },
@@ -1568,12 +1538,12 @@
         "type": "function",
         "z": "d9594b8f.641b7",
         "name": "Generate Request",
-        "func": "var myBccConfig = JSON.parse(env.get(\"BCC_CONFIG\"));\nlet customerId = myBccConfig.customerId;\n\nreturn {\n headers: {\n \"Content-Type\": \"application/json\" \n },\n payload: { \n \"customerId\": customerId\n } \n};",
+        "func": "var myBccConfig = global.get(\"BCC_CONFIG\")||false;\nurl = myBccConfig[0][\"blockchain-endpoint\"];\n\nmsg.payload = {}\nmsg.url = url;\nmsg.headers = {\n \"Content-Type\": \"application/json\" \n};\nreturn msg;\n\n/*\nvar myBccConfig = JSON.parse(env.get(\"BCC_CONFIG\"));\nlet customerId = myBccConfig.customerId;\n\nreturn {\n headers: {\n \"Content-Type\": \"application/json\" \n },\n payload: { \n \"customerId\": customerId\n } \n};\n*/",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 610,
+        "x": 330,
         "y": 540,
         "wires": [
             [
@@ -1586,7 +1556,7 @@
         "id": "e71f3ca6.1ef8e",
         "type": "inject",
         "z": "d9594b8f.641b7",
-        "name": "Healthcheck Intervall",
+        "name": "alle 5 Min",
         "props": [
             {
                 "p": "payload"
@@ -1595,11 +1565,11 @@
         "repeat": "300",
         "crontab": "",
         "once": true,
-        "onceDelay": 0.1,
+        "onceDelay": "1",
         "topic": "",
         "payload": "",
         "payloadType": "str",
-        "x": 380,
+        "x": 130,
         "y": 540,
         "wires": [
             [
@@ -1608,46 +1578,15 @@
         ]
     },
     {
-        "id": "8a08ec3e.e5cca8",
-        "type": "catch",
-        "z": "f7247905.828f38",
-        "name": "",
-        "scope": null,
-        "uncaught": true,
-        "x": 520,
-        "y": 380,
-        "wires": [
-            [
-                "8b1f4071.386308"
-            ]
-        ]
-    },
-    {
-        "id": "8b1f4071.386308",
-        "type": "debug",
-        "z": "f7247905.828f38",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": true,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 710,
-        "y": 380,
-        "wires": []
-    },
-    {
         "id": "f58f8bc.645d078",
         "type": "catch",
         "z": "d9594b8f.641b7",
+        "d": true,
         "name": "",
         "scope": null,
         "uncaught": true,
-        "x": 700,
-        "y": 700,
+        "x": 180,
+        "y": 680,
         "wires": [
             [
                 "6a965e5d.edc5f8"
@@ -1659,7 +1598,7 @@
         "type": "debug",
         "z": "d9594b8f.641b7",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": true,
         "tostatus": false,
@@ -1667,8 +1606,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 910,
-        "y": 700,
+        "x": 370,
+        "y": 680,
         "wires": []
     },
     {
@@ -1707,6 +1646,7 @@
         "id": "cebe15d7.5d691",
         "type": "catch",
         "z": "c70ed392.30d548",
+        "d": true,
         "name": "",
         "scope": null,
         "uncaught": true,
@@ -1752,7 +1692,8 @@
         "once": true,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 520,
+        "payloadType": "str",
+        "x": 330,
         "y": 80,
         "wires": [
             [
@@ -1770,8 +1711,8 @@
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 210,
-        "y": 580,
+        "x": 150,
+        "y": 480,
         "wires": [
             [
                 "cab6d232.317b7"
@@ -1785,8 +1726,8 @@
         "name": "Response",
         "statusCode": "",
         "headers": {},
-        "x": 740,
-        "y": 580,
+        "x": 610,
+        "y": 480,
         "wires": []
     },
     {
@@ -1794,13 +1735,13 @@
         "type": "function",
         "z": "70de23d1.e038a4",
         "name": "healthcheck",
-        "func": "if (msg.hasOwnProperty(\"status\")){\n    context.set(\"mqttstatus\",msg.status.text);\n    \n}else if (msg.hasOwnProperty(\"statusCode\")){\n    \n    context.set(\"bcstatus\", msg.payload);\n}else {\n    mqttstatus = context.get(\"mqttstatus\");\n    bcstatus = context.get(\"bcstatus\");\n\n\n    msg.statusCode = (\n        (mqttstatus === \"node-red:common.status.connected\") && \n        (bcstatus === \"OK\")\n        ) ? 200 : 500;\n        \n    msg.payload = { \n        mqttstatus: mqttstatus, \n        bcstatus: bcstatus\n    };\n    \n    return msg\n}",
+        "func": "\n\nmqttstatus = global.get(\"mqttstatus\");\nbcstatus = global.get(\"bcstatus\");\n\nvar ok = \n    (mqttstatus === \"node-red:common.status.connected\") \n    && (bcstatus.success === \"true\");\n    \nmsg.statusCode = ok ? 200 : 500;\n    \nmsg.payload = { \n    \"success\": ok ? \"true\" : \"false\",\n    \"mqttstatus\": mqttstatus, \n    \"bcstatus\": bcstatus\n};\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 500,
-        "y": 580,
+        "x": 410,
+        "y": 480,
         "wires": [
             [
                 "8b1fa836.30f2c8"
@@ -1811,15 +1752,15 @@
         "id": "5433682b.e03228",
         "type": "status",
         "z": "70de23d1.e038a4",
-        "name": "",
+        "name": "MQTT-Broker-Status",
         "scope": [
             "a0546adc.7182c"
         ],
-        "x": 260,
-        "y": 520,
+        "x": 180,
+        "y": 420,
         "wires": [
             [
-                "cab6d232.317b7"
+                "c6036120.bef9d8"
             ]
         ]
     },
@@ -1827,11 +1768,12 @@
         "id": "5a63d982.2e1368",
         "type": "link out",
         "z": "d9594b8f.641b7",
-        "name": "",
+        "name": "Healthcheck",
         "links": [
-            "2f85f3e.77cc10c"
+            "2f85f3e.77cc10c",
+            "5fac9959.1b08"
         ],
-        "x": 1115,
+        "x": 735,
         "y": 580,
         "wires": []
     },
@@ -1843,12 +1785,10 @@
         "links": [
             "5a63d982.2e1368"
         ],
-        "x": 315,
-        "y": 480,
+        "x": 275,
+        "y": 520,
         "wires": [
-            [
-                "cab6d232.317b7"
-            ]
+            []
         ]
     },
     {
@@ -1856,14 +1796,18 @@
         "type": "function",
         "z": "f7247905.828f38",
         "name": "Store as GLOBAL",
-        "func": "var myBccConfig = JSON.parse(msg.payload);\n//var newBccConfig = [];\nmyBccConfig.forEach(function(confSet) {\n    var machineId = confSet[\"machineId\"];\n    //node.warn(\"machineId=\"+machineId);\n    if (machineId) {\n        confSet[\"mqtt-topic\"] = confSet[\"mqtt-topic\"].replace(\"<machineId>\",machineId);\n        confSet[\"blockchain-endpoint\"] = confSet[\"blockchain-endpoint\"].replace(\"<machineId>\",machineId);\n    } else {\n        node.warn(\"Warning in BCC_CONFIG: missing machineId\");\n    }\n    var sensorId = confSet[\"sensorId\"];\n    if (sensorId) {\n        confSet[\"mqtt-topic\"] = confSet[\"mqtt-topic\"].replace(\"<sensorId>\",sensorId);\n        confSet[\"blockchain-endpoint\"] = confSet[\"blockchain-endpoint\"].replace(\"<sensorId>\",sensorId);\n    } else {\n        node.warn(\"Warning in BCC_CONFIG: missing sensorId\");\n    }\n    /*\n    node.warn(\"new topic=\"+confSet[\"mqtt-topic\"]);\n    newBccConfig.push({ [confSet[\"mqtt-topic\"]]: {\n        \"blockchain-endpoint\": confSet[\"blockchain-endpoint\"],\n        \"mapping\": confSet[\"mapping\"]\n    }});\n    */\n});\nglobal.set(\"BCC_CONFIG\",myBccConfig);\n//global.set(\"BCC_CONFIG\",newBccConfig);\n",
-        "outputs": 0,
+        "func": "var myBccConfig = JSON.parse(msg.payload);\nvar bcApiProddata = env.get(\"BC_API_PRODDATA\");\n//var newBccConfig = [];\nmyBccConfig.forEach(function(confSet) {\n    confSet[\"blockchain-endpoint\"] = confSet[\"blockchain-endpoint\"].replace(\"<BC_API_PRODDATA>\",bcApiProddata);\n    var machineId = confSet[\"machineId\"];\n    //node.warn(\"machineId=\"+machineId);\n    if (machineId) {\n        confSet[\"mqtt-topic\"] = confSet[\"mqtt-topic\"].replace(\"<machineId>\",machineId);\n        confSet[\"blockchain-endpoint\"] = confSet[\"blockchain-endpoint\"].replace(\"<machineId>\",machineId);\n    } else {\n        node.warn(\"Warning in BCC_CONFIG: missing machineId\");\n    }\n    var sensorId = confSet[\"sensorId\"];\n    if (sensorId) {\n        confSet[\"mqtt-topic\"] = confSet[\"mqtt-topic\"].replace(\"<sensorId>\",sensorId);\n        confSet[\"blockchain-endpoint\"] = confSet[\"blockchain-endpoint\"].replace(\"<sensorId>\",sensorId);\n    } else {\n        node.warn(\"Warning in BCC_CONFIG: missing sensorId\");\n    }\n    /*\n    node.warn(\"new topic=\"+confSet[\"mqtt-topic\"]);\n    newBccConfig.push({ [confSet[\"mqtt-topic\"]]: {\n        \"blockchain-endpoint\": confSet[\"blockchain-endpoint\"],\n        \"mapping\": confSet[\"mapping\"]\n    }});\n    */\n});\nglobal.set(\"BCC_CONFIG\",myBccConfig);\n//global.set(\"BCC_CONFIG\",newBccConfig);\nmsg.payload = myBccConfig;\nreturn msg;\n",
+        "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 710,
-        "y": 220,
-        "wires": []
+        "x": 610,
+        "y": 200,
+        "wires": [
+            [
+                "d4b90124.c298e8"
+            ]
+        ]
     },
     {
         "id": "85a941ab.f6c788",
@@ -1883,11 +1827,11 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "kosmos/machine-data/9d82699b-373a-4b2a-8925-f7bfacb618a4/Sensor/123-my-456-sensor-789-id-000/Update",
-        "payload": "{\"prodMinutes\":0,\"prodPieces\":0,\"toolChanges\":0,\"travelDistance\":0,\"directionChange\":0,\"materialType\":\"aluminum\"}",
+        "topic": "kosmos/machine-data/14ca47df-3872-4d05-b6fe-dabb2dcb92ea/Sensor/sensor1inmachine1/Update",
+        "payload": "{\"$schema\":\"../../mqtt_payloads/data/formal.json\",\"body\":{\"timestamp\":\"2021-02-16T12:00:00Z\",\"machineID\":\"14ca47df-3872-4d05-b6fe-dabb2dcb92ea\",\"columns\":[{\"name\":\"crash\",\"type\":\"string\",\"meta\":{\"unit\":\"\",\"description\":\"defines if the machine is crashed or not\"}},{\"name\":\"prodMinutes\",\"type\":\"number\",\"meta\":{\"unit\":\"minutes\",\"description\":\"are the production minutes\"}},{\"name\":\"prodPieces\",\"type\":\"number\",\"meta\":{\"unit\":\"\",\"description\":\"is the counter of produced pieces in the machine\"}},{\"name\":\"toolChanges\",\"type\":\"number\",\"meta\":{\"unit\":\"\",\"description\":\"is the counter of tool changes in the machine\"}},{\"name\":\"travelDistance\",\"type\":\"number\",\"meta\":{\"unit\":\"\",\"description\":\"is the counter of the travel distance\"}},{\"name\":\"directionChange\",\"type\":\"number\",\"meta\":{\"unit\":\"\",\"description\":\"is the counter of direction changes\"}},{\"name\":\"materialType\",\"type\":\"string\",\"meta\":{\"unit\":\"\",\"description\":\"defines the matrial type\"}}],\"data\":[[\"true\"],[\"110\"],[\"55\"],[\"100000\"],[\"55\"],[\"31\"],[\"stone\"]]}}",
         "payloadType": "json",
-        "x": 130,
-        "y": 300,
+        "x": 160,
+        "y": 200,
         "wires": [
             [
                 "59579a0e.8a9554"
@@ -1904,8 +1848,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 360,
-        "y": 260,
+        "x": 440,
+        "y": 240,
         "wires": [
             []
         ]
@@ -1925,10 +1869,10 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "[{\"machineId\":\"9d82699b-373a-4b2a-8925-f7bfacb618a4\",\"sensorId\":\"123-my-456-sensor-789-id-000\",\"mqtt-topic\":\"kosmos/machine-data/<machineId>/Sensor/<sensorId>/Update\",\"blockchain-endpoint\":\"http://blockchain-api/api/machine/<machineId>/prodData\",\"mapping\":\"none\"},{\"machineId\":\"222-maschinezwei-222\",\"sensorId\":\"222-sensoreins-222\",\"mqtt-topic\":\"kosmos/machine-data/<machineId>/Sensor/<sensorId>/Update\",\"blockchain-endpoint\":\"http://blockchain-api/api/machine/<machineId>/prodData\",\"mapping\":\"none\"},{\"machineId\":\"333-maschinezwei-333\",\"sensorId\":\"333-sensorzwei-333\",\"mqtt-topic\":\"kosmos/machine-data/<machineId>/Sensor/<sensorId>/Update\",\"blockchain-endpoint\":\"http://blockchain-api/api/machine/<machineId>/prodData\",\"mapping\":\"mapXYZ\"}]",
+        "payload": "[{\"machineId\":\"machineid1injected\",\"sensorId\":\"sensor1inmachine1\",\"mqtt-topic\":\"kosmos/machine-data/<machineId>/Sensor/<sensorId>/Update\",\"blockchain-endpoint\":\"<BC_API_PRODDATA>/<machineId>\",\"mapping\":\"none\"},{\"machineId\":\"machineid2injected\",\"sensorId\":\"sensor1inmachine2\",\"mqtt-topic\":\"kosmos/machine-data/<machineId>/Sensor/<sensorId>/Update\",\"blockchain-endpoint\":\"<BC_API_PRODDATA>/<machineId>\",\"mapping\":\"none\"}]",
         "payloadType": "json",
-        "x": 270,
-        "y": 260,
+        "x": 210,
+        "y": 240,
         "wires": [
             [
                 "c2d53300.3be4d8"
@@ -1945,7 +1889,7 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 470,
+        "x": 410,
         "y": 240,
         "wires": [
             [
@@ -1962,11 +1906,159 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 850,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "e0fdb7b8.15ec68",
+        "type": "comment",
+        "z": "f7247905.828f38",
+        "name": "Hilfe",
+        "info": "#  Hilfe\n\nDie Flows (Tabs) werden jeweils\nkurz beschrieben (i-Button in Sidebar).",
+        "x": 160,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "dcaa32bb.5d92f8",
+        "type": "comment",
+        "z": "d9594b8f.641b7",
+        "name": "BC-API Healthcehck",
+        "info": "",
+        "x": 140,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "871af759.a4a048",
+        "type": "catch",
+        "z": "70de23d1.e038a4",
+        "name": "MQTT-Broker-Catch",
+        "scope": [
+            "a0546adc.7182c"
+        ],
+        "uncaught": false,
+        "x": 180,
+        "y": 320,
+        "wires": [
+            [
+                "2cc49f85.36a49"
+            ]
+        ]
+    },
+    {
+        "id": "2cc49f85.36a49",
+        "type": "debug",
+        "z": "70de23d1.e038a4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 840,
+        "x": 390,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "c6036120.bef9d8",
+        "type": "function",
+        "z": "70de23d1.e038a4",
+        "name": "Set MQTT-Status",
+        "func": "if (msg.hasOwnProperty(\"status\")){\n    global.set(\"mqttstatus\",msg.status.text);\n    \n} \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 430,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d636a9bc.431818",
+        "type": "comment",
+        "z": "c70ed392.30d548",
+        "name": "http://kosmos-2017317103.eu-central-1.elb.amazonaws.com/api/machine",
+        "info": "",
+        "x": 520,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "df26cdab.1c5488",
+        "type": "comment",
+        "z": "c70ed392.30d548",
+        "name": "http://kosmos-2017317103.eu-central-1.elb.amazonaws.com/api/contract",
+        "info": "",
+        "x": 520,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "c9dc3955.d64138",
+        "type": "function",
+        "z": "70de23d1.e038a4",
+        "name": "Set BC-API-Status",
+        "func": "if (msg.hasOwnProperty(\"statusCode\")) {\n    context.set(\"bcstatus\", msg.payload);\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 870,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "df22d789.2a6d4",
+        "type": "debug",
+        "z": "d9594b8f.641b7",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 540,
         "y": 120,
         "wires": []
+    },
+    {
+        "id": "11722954.1815f7",
+        "type": "comment",
+        "z": "f7247905.828f38",
+        "name": "CLI-Test",
+        "info": "Zuerst Daten erzeugen (im Container).\n\nBeispieldaten stehen in https://git.isw.uni-stuttgart.de/projekte/forschung/2019_bmbf_kosmos/KOSMoS/kosmos-json-specifications/-/blob/master/flow_example/enablerFebruar/data-crash.json\n\nÜbernehmen über Zwischenablage:\n\n`$ cat | jq > /tmp/data.json`\n\nDann noch  die `machineID` anpassen auf:\n\n`   \"machineID\": \"14ca47df-3872-4d05-b6fe-dabb2dcb92ea\",`\n\n\nDann BC-API-Aufruf:\n\n```\ncurl -v -i -X POST http://35.159.41.125/storage/prodData -H \"Content-Type: application/json\" --data-binary \"@/tmp/data.json\"\n```\n",
+        "x": 190,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "360e0806.471468",
+        "type": "function",
+        "z": "d9594b8f.641b7",
+        "name": "Set BC-Status",
+        "func": "if (msg.hasOwnProperty(\"statusCode\")) {\n    global.set(\"bcstatus\", {\n        url: msg.url,\n        result: msg.payload,\n        // 404 ist ok, weil POST-Request erwartet wird\n        expected: \"Return-Code 404, weil POST erwartet wird\",\n        success: msg.statusCode == \"404\"\n    });\n}  \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 760,
+        "y": 620,
+        "wires": [
+            []
+        ]
     }
 ]

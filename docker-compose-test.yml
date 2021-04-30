@@ -11,9 +11,21 @@ services:
       USE_TLS: "false"
       #- USE_STANDALONE_NO_MQTT: true
       MQTT_BROKER_FQDN: "mqtt-broker"
-      BC_API_PRODDATA: "http://164.90.233.34/storage/prodData"
-    volumes:
-      - ./BCC_config.json:/tmp/BCC_config.json
+      BC_API_PRODDATA: "http://35.159.41.125/storage/prodData"
+      BC_API_MACHINES: "http://35.159.41.125/machine"
+      BC_API_CONTRACTS: "http://35.159.41.125/contract"
+      BCC_CONFIG: >
+        [
+          {
+            "machineId": "14ca47df-3872-4d05-b6fe-dabb2dcb92ea",
+            "sensorId": "sensor1inmachine1",
+            "mqtt-topic": "kosmos/machine-data/<machineId>/Sensor/<sensorId>/Update",
+            "blockchain-endpoint": "<BC_API_PRODDATA>",
+            "mapping": "none"
+          }
+        ]
+    # volumes:
+    #   - ./BCC_config.json:/tmp/BCC_config.json
     ports:
       - 10005:1880
 
