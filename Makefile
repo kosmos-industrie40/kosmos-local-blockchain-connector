@@ -11,8 +11,8 @@ DOCKER_COMPOSE_FILE=docker-compose-test.yml
 .PHONY: help build
 
 help:
-	@echo "# Yii2-Helferlein"
-	@echo "# (C) Ondics, 2019"
+	@echo "# Docker-Helferlein"
+	@echo "# (C) Ondics, 2021"
 	@echo Befehle: make ...
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
@@ -39,7 +39,7 @@ bash: ## Die bash im php Container starten
 logs: ## Alle stdout's aller Container zeigen
 	docker-compose -f $(DOCKER_COMPOSE_FILE) logs -f -t
     
-push: ## Alle stdout's aller Container zeigen
+push: ## Container pushen auf Harbor (ondics)
 	docker login harbor.kosmos.idcp.inovex.io/ondics
 	docker-compose -f $(DOCKER_COMPOSE_FILE) push
     

@@ -6,7 +6,7 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile.blockchain-connector
-    container_name: blockchain-connector
+    container_name: blockchain-connector-test
     environment:
       USE_TLS: "false"
       #- USE_STANDALONE_NO_MQTT: true
