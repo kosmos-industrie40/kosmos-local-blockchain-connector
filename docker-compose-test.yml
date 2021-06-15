@@ -2,7 +2,7 @@ version: "2"
 
 services:
   blockchain-connector:
-    image: harbor.kosmos.idcp.inovex.io/ondics/blockchain-connector:0.3.0
+    image: harbor.kosmos.idcp.inovex.io/ondics/blockchain-connector:0.4.0
     build: 
       context: .
       dockerfile: Dockerfile.blockchain-connector
