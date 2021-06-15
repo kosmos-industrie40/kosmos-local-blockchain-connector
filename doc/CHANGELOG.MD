@@ -5,6 +5,7 @@ Todo:
 
 15.6.2021:
 * Fix: chance GET to POST in health check
+* Fix: change MQTT topic to lowercase only
 
 4.5.2021:
 * Fix: Make typos

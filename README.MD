@@ -52,7 +52,7 @@ Die Produktionsversion wird mit Docker gestartet:
         -e BCC_CONFIG="[{ \
                 "machineId": "14ca47df-3872-4d05-b6fe-dabb2dcb92ea", \
                 "sensorId": "sensor1inmachine1", \
-                "mqtt-topic": "kosmos/machine-data/<machineId>/Sensor/<sensorId>/Update", \
+                "mqtt-topic": "kosmos/machine-data/<machineId>/sensor/<sensorId>/update", \
                 "blockchain-endpoint": "<BC_API_PRODDATA>", \
                 "mapping": "none" \
             }]"
@@ -104,7 +104,7 @@ Beispiel:
         {
             "machineId": "14ca47df-3872-4d05-b6fe-dabb2dcb92ea",
             "sensorId": "sensor1inmachine1",
-            "mqtt-topic": "kosmos/machine-data/<machineId>/Sensor/<sensorId>/Update",
+            "mqtt-topic": "kosmos/machine-data/<machineId>/sensor/<sensorId>/update",
             "blockchain-endpoint": "<BC_API_PRODDATA>",
             "mapping": "none"
         }
