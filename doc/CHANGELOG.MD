@@ -3,6 +3,9 @@
 Todo: 
 * make mqtt-security optional
 
+15.6.2021:
+* Fix: chance GET to POST in health check
+
 4.5.2021:
 * Fix: Make typos
 * Fix: New name for container in "make test"
