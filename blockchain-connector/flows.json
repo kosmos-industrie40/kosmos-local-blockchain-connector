@@ -1499,7 +1499,7 @@
         "type": "http request",
         "z": "d9594b8f.641b7",
         "name": "",
-        "method": "GET",
+        "method": "POST",
         "ret": "txt",
         "paytoqs": "body",
         "url": "",
