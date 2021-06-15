@@ -23,8 +23,8 @@ up:	## alle Container starten
 	docker-compose -f $(DOCKER_COMPOSE_FILE) up -d
 
 down: ## alle Container stoppen
-	docker kill blockchain-connector
-	docker rm blockchain-connector
+	-docker kill blockchain-connector
+	-docker rm blockchain-connector
 	docker-compose -f $(DOCKER_COMPOSE_FILE) down --remove-orphans
 	
 build: ## alle Container bauen
