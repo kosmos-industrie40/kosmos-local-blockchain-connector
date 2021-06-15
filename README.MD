@@ -46,10 +46,10 @@ Die Produktionsversion wird mit Docker gestartet:
         -e VAULT_TOKEN=${VAULT_TOKEN} \
         -e USE_TLS=true \
         -e USE_STANDALONE_NO_MQTT=false \
-        -e BC_API_PRODDATA: "http://35.159.41.125/storage/prodData" \
-        -e BC_API_MACHINES: "http://35.159.41.125/machine" \
-        -e BC_API_CONTRACTS: "http://35.159.41.125/contract" \
-        -e BCC_CONFIG: "[{ \
+        -e BC_API_PRODDATA=http://35.159.41.125/storage/prodData \
+        -e BC_API_MACHINES=http://35.159.41.125/machine \
+        -e BC_API_CONTRACTS=http://35.159.41.125/contract \
+        -e BCC_CONFIG="[{ \
                 "machineId": "14ca47df-3872-4d05-b6fe-dabb2dcb92ea", \
                 "sensorId": "sensor1inmachine1", \
                 "mqtt-topic": "kosmos/machine-data/<machineId>/Sensor/<sensorId>/Update", \

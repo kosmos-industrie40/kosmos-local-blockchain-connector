@@ -3,6 +3,10 @@
 Todo: 
 * make mqtt-security optional
 
+4.5.2021:
+* Fix: Make typos
+* Fix: New name for container in "make test"
+
 30.4.2021:
 * New: test with valid bc-endpoint
 * New: docs about new BCC_CONFIG.json in Readme
