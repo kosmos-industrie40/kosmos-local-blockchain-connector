@@ -5,6 +5,7 @@ Todo:
 
 6.9.2021:
 * New: Adapted to SW-Use Case
+* Fix: docker-compose push for harbor changed in Makefile
 
 15.6.2021:
 * Fix: chance GET to POST in health check

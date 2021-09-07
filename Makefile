@@ -4,6 +4,7 @@
 #
 
 DOCKER_COMPOSE_FILE=docker-compose-test.yml
+DOCKER_COMPOSE_FILE_HARBOR=docker-compose.yml
 
 # help-systematik
 # build muss phony sein (forcierter build), weil es 
@@ -41,5 +42,5 @@ logs: ## Alle stdout's aller Container zeigen
     
 push: ## Container pushen auf Harbor (ondics)
 	docker login harbor.kosmos.idcp.inovex.io/ondics
-	docker-compose -f $(DOCKER_COMPOSE_FILE) push
+	docker-compose -f $(DOCKER_COMPOSE_FILE_HARBOR) push
     
