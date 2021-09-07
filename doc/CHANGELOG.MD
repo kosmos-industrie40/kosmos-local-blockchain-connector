@@ -3,6 +3,9 @@
 Todo: 
 * make mqtt-security optional
 
+6.9.2021:
+* New: Adapted to SW-Use Case
+
 15.6.2021:
 * Fix: chance GET to POST in health check
 * Fix: change MQTT topic to lowercase only

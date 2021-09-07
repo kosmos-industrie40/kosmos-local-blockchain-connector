@@ -437,15 +437,16 @@
         "type": "mqtt in",
         "z": "70de23d1.e038a4",
         "name": "",
-        "topic": "kosmos/machine-data/+/sensor/+/update",
+        "topic": "kosmos/machine-data/+/Sensor/Blockchain/Update",
         "qos": "2",
         "datatype": "json",
         "broker": "5e822ce4.c7fbdc",
-        "x": 240,
+        "x": 270,
         "y": 100,
         "wires": [
             [
-                "59579a0e.8a9554"
+                "59579a0e.8a9554",
+                "cfcd1f70.d3644"
             ]
         ]
     },
@@ -454,7 +455,7 @@
         "type": "function",
         "z": "70de23d1.e038a4",
         "name": "Evaluate BCC_CONFIG",
-        "func": "/*\n * Prüfen, ob das eingehende Topic an die\n * Blockchain übertragen werden soll\n * Wenn nein => Flow stoppen\n * Wenn ja => Flow fortsetzen\n */\n\nvar myBccConfig = global.get(\"BCC_CONFIG\")||false;\n\nif (!myBccConfig) {\n    node.warn(\"error: BCC_CONFIG missing\");\n    node.status({fill:\"red\",shape:\"ring\",text:\"BCC_CONFIG missing\"});\n    return;\n}\n\n// Get config set from configuration\nvar confSet = myBccConfig.find(element => element[\"mqtt-topic\"] == [msg.topic]);\n\n// If topic is not configured => stop\nif (!confSet) {\n    node.warn(\"info: ignore topic [\"+msg.topic+\"]\");\n    return;\n}\n\n// Perform specified mapping\nvar mapping = confSet[\"mapping\"] || false;\nswitch (mapping) {\n    case \"none\":\n        break;\n    default:\n        node.warn(\"warning: Mapping not implemented yet\");\n}\n\n// Proceed with with a unique msgid\nmsg.msgid = RED.util.generateId();\nmsg.url = env.get(\"BC_API_PRODDATA\");\n/*\nnode.send({\n    topic: msg.topic,\n    msgid: RED.util.generateId(),\n    //url: \"164.90.233.34:3001/storage/prodData\",\n    url: env.get(\"BC_API_PRODDATA\"),\n    payload: msg.payload\n});\n*/\nreturn msg;",
+        "func": "/*\n * Prüfen, ob das eingehende Topic an die\n * Blockchain übertragen werden soll\n * Wenn nein => Flow stoppen\n * Wenn ja => Flow fortsetzen\n */\n\nvar myBccConfig = global.get(\"BCC_CONFIG\")||false;\n\nif (!myBccConfig) {\n    node.warn(\"error: BCC_CONFIG missing\");\n    node.status({fill:\"red\",shape:\"ring\",text:\"BCC_CONFIG missing\"});\n    return;\n}\n\n// Get config set from configuration\nvar confSet = myBccConfig.find(element => element[\"mqtt-topic\"] == [msg.topic]);\n\n// If topic is not configured => stop\n/*\nif (!confSet) {\n    node.warn(\"info: ignore topic [\"+msg.topic+\"]\");\n    return;\n}\n\n// Perform specified mapping\nvar mapping = confSet[\"mapping\"] || false;\nswitch (mapping) {\n    case \"none\":\n        break;\n    default:\n        node.warn(\"warning: Mapping not implemented yet\");\n}\n*/\nvar msgNew = {};\nmsgNew.payload=msg.payload.body\n\n// Proceed with with a unique msgid\nmsgNew.msgid = RED.util.generateId();\nmsgNew.url = env.get(\"BC_API_PRODDATA\");\n/*\nnode.send({\n    topic: msg.topic,\n    msgid: RED.util.generateId(),\n    //url: \"164.90.233.34:3001/storage/prodData\",\n    url: env.get(\"BC_API_PRODDATA\"),\n    payload: msg.payload\n});\n*/\nreturn msgNew;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -466,7 +467,8 @@
                 "3fd9414c.183f7e",
                 "361df1ea.a0060e",
                 "8d9fefba.bd641",
-                "476622b9.de1044"
+                "476622b9.de1044",
+                "99bdcb78.005828"
             ]
         ]
     },
@@ -953,7 +955,7 @@
         "fwdInMessages": true,
         "resendOnRefresh": true,
         "templateScope": "local",
-        "x": 970,
+        "x": 1090,
         "y": 280,
         "wires": [
             []
@@ -1834,7 +1836,8 @@
         "y": 200,
         "wires": [
             [
-                "59579a0e.8a9554"
+                "59579a0e.8a9554",
+                "cfcd1f70.d3644"
             ]
         ]
     },
@@ -2060,5 +2063,39 @@
         "wires": [
             []
         ]
+    },
+    {
+        "id": "cfcd1f70.d3644",
+        "type": "debug",
+        "z": "70de23d1.e038a4",
+        "name": "Hello",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 320,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "99bdcb78.005828",
+        "type": "debug",
+        "z": "70de23d1.e038a4",
+        "name": "bye bye",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 180,
+        "wires": []
     }
 ]
