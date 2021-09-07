@@ -41,6 +41,7 @@ logs: ## Alle stdout's aller Container zeigen
 	docker-compose -f $(DOCKER_COMPOSE_FILE) logs -f -t
     
 push: ## Container pushen auf Harbor (ondics)
+	docker-compose -f $(DOCKER_COMPOSE_FILE_HARBOR) build
 	docker login harbor.kosmos.idcp.inovex.io/ondics
 	docker-compose -f $(DOCKER_COMPOSE_FILE_HARBOR) push
     
