@@ -146,4 +146,4 @@ Verwendete Software und Technologien:
 
 ## Author
 
-(C) 2021 Ondics GmbH
+(C) 2022 Ondics GmbH
