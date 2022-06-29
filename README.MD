@@ -125,7 +125,7 @@ Die LKK-BCC macht folgendes:
 
 Als Blockchain wird Hyperledger Fabric verwendet, die Kommunikation findet über eine HTTP-API statt
 
-> Dokmentation der API: http://35.159.41.125/docs
+> Dokmentation der API: http://<bc-api>/docs
   
   
 ### Dashboard
