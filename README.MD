@@ -13,6 +13,7 @@ Der LKK-BCC stellt eine Schnittstelle zwischen den lokalen KOSMoS Komponenten un
 * Linux (getestet unter Ubuntu 18.04.4 LTS und Arch rolling)
 * Docker (`apt install docker-ce` bzw. `pacman -S docker`)
 * Die [lokale KOSMoS MQTT-Broker](https://github.com/kosmos-industrie40/kosmos-local-mqtt-broker) Komponente
+* Die Blockchain-API muss verfügbar sein (Endpunkt FQDN oder IP-Adresse: <bc-api>)
 * OPTIONAL: 
     * [lokale KOSMoS Machine-Simulator](https://github.com/kosmos-industrie40/kosmos-local-machine-simulator) Komponente
 
@@ -46,9 +47,9 @@ Die Produktionsversion wird mit Docker gestartet:
         -e VAULT_TOKEN=${VAULT_TOKEN} \
         -e USE_TLS=true \
         -e USE_STANDALONE_NO_MQTT=false \
-        -e BC_API_PRODDATA=http://35.159.41.125/storage/prodData \
-        -e BC_API_MACHINES=http://35.159.41.125/machine \
-        -e BC_API_CONTRACTS=http://35.159.41.125/contract \
+        -e BC_API_PRODDATA=http://<bc-api>/storage/prodData \
+        -e BC_API_MACHINES=http://<bc-api>/machine \
+        -e BC_API_CONTRACTS=http://<bc-api>/contract \
         -e BCC_CONFIG="[{ \
                 "machineId": "14ca47df-3872-4d05-b6fe-dabb2dcb92ea", \
                 "sensorId": "sensor1inmachine1", \
